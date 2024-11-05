@@ -19,25 +19,25 @@
         <!-- Task 1 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 1</label>
-          <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <label><input type="checkbox" id="yesterdayTask1Completed" checked onchange="toggleReason(1)"> Completed</label>
-          <textarea id="yesterdayTask1Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden"></textarea>
+          <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <label><input type="checkbox" id="yesterdayTask1Completed" checked onchange="toggleReason(1); saveToCookies()"> Completed</label>
+          <textarea id="yesterdayTask1Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" oninput="saveToCookies()"></textarea>
         </div>
 
         <!-- Task 2 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 2</label>
-          <input type="text" id="yesterdayTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <label><input type="checkbox" id="yesterdayTask2Completed" checked onchange="toggleReason(2)"> Completed</label>
-          <textarea id="yesterdayTask2Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden"></textarea>
+          <input type="text" id="yesterdayTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <label><input type="checkbox" id="yesterdayTask2Completed" checked onchange="toggleReason(2); saveToCookies()"> Completed</label>
+          <textarea id="yesterdayTask2Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" oninput="saveToCookies()"></textarea>
         </div>
 
         <!-- Task 3 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 3</label>
-          <input type="text" id="yesterdayTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <label><input type="checkbox" id="yesterdayTask3Completed" checked onchange="toggleReason(3)"> Completed</label>
-          <textarea id="yesterdayTask3Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden"></textarea>
+          <input type="text" id="yesterdayTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <label><input type="checkbox" id="yesterdayTask3Completed" checked onchange="toggleReason(3); saveToCookies()"> Completed</label>
+          <textarea id="yesterdayTask3Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" oninput="saveToCookies()"></textarea>
         </div>
       </div>
 
@@ -47,20 +47,20 @@
         
         <!-- Task 1 -->
         <div class="mb-4">
-          <input type="text" id="tomorrowTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <textarea id="tomorrowTask1Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
+          <input type="text" id="tomorrowTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <textarea id="tomorrowTask1Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
         
         <!-- Task 2 -->
         <div class="mb-4">
-          <input type="text" id="tomorrowTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <textarea id="tomorrowTask2Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
+          <input type="text" id="tomorrowTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <textarea id="tomorrowTask2Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
         
         <!-- Task 3 -->
         <div class="mb-4">
-          <input type="text" id="tomorrowTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-          <textarea id="tomorrowTask3Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
+          <input type="text" id="tomorrowTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+          <textarea id="tomorrowTask3Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
       </div>
 
@@ -69,7 +69,7 @@
         <div class="flex justify-between items-center mb-2">
           <label class="block font-semibold">Wins</label>
           <button type="button" onclick="addReflectionField('winsContainer', 'wins')" class="text-blue-500">+ Add</button>
-          <select id="winsFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none">
+          <select id="winsFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none" onchange="saveToCookies()">
             <option value="bullet">Bulleted</option>
             <option value="numbered">Numbered</option>
           </select>
@@ -79,7 +79,7 @@
         <div class="flex justify-between items-center mb-2">
           <label class="block font-semibold">Challenges</label>
           <button type="button" onclick="addReflectionField('challengesContainer', 'challenges')" class="text-blue-500">+ Add</button>
-          <select id="challengesFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none">
+          <select id="challengesFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none" onchange="saveToCookies()">
             <option value="bullet">Bulleted</option>
             <option value="numbered">Numbered</option>
           </select>
@@ -89,7 +89,7 @@
         <div class="flex justify-between items-center mb-2">
           <label class="block font-semibold">Self-Reflections</label>
           <button type="button" onclick="addReflectionField('selfReflectionsContainer', 'selfReflection')" class="text-blue-500">+ Add</button>
-          <select id="selfReflectionsFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none">
+          <select id="selfReflectionsFormat" class="ml-2 px-2 py-1 border rounded-md focus:outline-none" onchange="saveToCookies()">
             <option value="bullet">Bulleted</option>
             <option value="numbered">Numbered</option>
           </select>
@@ -100,7 +100,7 @@
       <!-- Day Score Slider -->
       <div>
         <label class="block font-semibold mb-2">Rate Your Day</label>
-        <input type="range" id="dayScore" min="1" max="10" step="0.5" value="5" class="w-full" oninput="updateDayScore()">
+        <input type="range" id="dayScore" min="1" max="10" step="0.5" value="5" class="w-full" oninput="updateDayScore(); saveToCookies()">
         <p class="text-center mt-2" id="dayScoreValue">5</p>
       </div>
 
@@ -108,26 +108,26 @@
       <div>
         <label class="block font-semibold mb-2">Habit Tracker</label>
         <div class="grid grid-cols-2 gap-4">
-          <label><input type="checkbox" id="meditation"> Meditation</label>
-          <label><input type="checkbox" id="workout"> Workout</label>
-          <label><input type="checkbox" id="healthyEating"> Healthy Eating</label>
-          <label><input type="checkbox" id="water"> Drink 2L+ Water</label>
-          <label><input type="checkbox" id="read"> Read 10 Pages</label>
-          <label><input type="checkbox" id="podcast" onchange="togglePodcastSection()"> Podcast</label>
+          <label><input type="checkbox" id="meditation" onchange="saveToCookies()"> Meditation</label>
+          <label><input type="checkbox" id="workout" onchange="saveToCookies()"> Workout</label>
+          <label><input type="checkbox" id="healthyEating" onchange="saveToCookies()"> Healthy Eating</label>
+          <label><input type="checkbox" id="water" onchange="saveToCookies()"> Drink 2L+ Water</label>
+          <label><input type="checkbox" id="read" onchange="saveToCookies()"> Read 10 Pages</label>
+          <label><input type="checkbox" id="podcast" onchange="togglePodcastSection(); saveToCookies()"> Podcast</label>
         </div>
       </div>
 
       <!-- Podcast Section (Shown only if Podcast is selected) -->
       <div id="podcastSection" class="hidden">
         <label class="block font-semibold mt-4">Podcast Details</label>
-        <input type="text" id="podcastTitle" placeholder="Podcast Title" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2">
-        <textarea id="podcastNotes" placeholder="What did you learn or find interesting?" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
+        <input type="text" id="podcastTitle" placeholder="Podcast Title" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
+        <textarea id="podcastNotes" placeholder="What did you learn or find interesting?" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
       </div>
 
       <!-- Gratitude -->
       <div>
         <label class="block font-semibold mb-2">Gratitude</label>
-        <textarea id="gratitude" placeholder="List things you're grateful for..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
+        <textarea id="gratitude" placeholder="List things you're grateful for..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
       </div>
 
       <!-- Generate Markdown Button -->
@@ -156,22 +156,28 @@
       input.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
       input.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
       input.name = sectionType;
+      input.oninput = saveToCookies;
 
       const deleteButton = document.createElement("button");
       deleteButton.type = "button";
       deleteButton.innerHTML = "&#10006;";
       deleteButton.className = "ml-2 text-red-500 font-bold";
-      deleteButton.onclick = () => div.remove();
+      deleteButton.onclick = () => {
+        div.remove();
+        saveToCookies();
+      };
 
       div.appendChild(input);
       div.appendChild(deleteButton);
       container.appendChild(div);
+      saveToCookies();
     }
 
     function toggleReason(taskNumber) {
       const checkbox = document.getElementById(`yesterdayTask${taskNumber}Completed`);
       const reasonTextarea = document.getElementById(`yesterdayTask${taskNumber}Reason`);
       reasonTextarea.classList.toggle("hidden", checkbox.checked);
+      saveToCookies();
     }
 
     function togglePodcastSection() {
@@ -182,6 +188,43 @@
       document.getElementById("dayScoreValue").textContent = document.getElementById("dayScore").value;
     }
 
+    // Save and load from cookies
+    function saveToCookies() {
+      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+      fields.forEach(field => {
+        document.cookie = `${field.id}=${encodeURIComponent(field.value)}; path=/;`;
+      });
+    }
+
+    function loadFromCookies() {
+      const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+        const [name, value] = cookie.split("=");
+        acc[name] = decodeURIComponent(value);
+        return acc;
+      }, {});
+
+      for (let id in cookies) {
+        const field = document.getElementById(id);
+        if (field) {
+          if (field.type === "checkbox") field.checked = cookies[id] === "true";
+          else field.value = cookies[id];
+        }
+      }
+    }
+
+    function clearCookies() {
+      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+      fields.forEach(field => {
+        document.cookie = `${field.id}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
+    }
+
+    loadFromCookies();
+
+    function formatList(items, formatType) {
+      return items.map((item, index) => formatType === "numbered" ? `${index + 1}. ${item}` : `- ${item}`).join("\n");
+    }
+
     function showNotification() {
       const notification = document.getElementById("copyNotification");
       notification.classList.remove("hidden");
@@ -190,66 +233,25 @@
 
     function generateMarkdown() {
       const dayOfWeek = document.getElementById("checkInTitle").textContent;
-      
-      const yesterdayTasks = Array.from({ length: 3 }, (_, i) => {
-        const title = document.getElementById(`yesterdayTask${i + 1}`).value.trim();
-        const completed = document.getElementById(`yesterdayTask${i + 1}Completed`).checked;
-        const reason = document.getElementById(`yesterdayTask${i + 1}Reason`).value.trim();
-        return title ? `- **${title}**: ${completed ? "Completed" : `Not Completed, Reason: ${reason || "No reason provided"}`}` : "";
-      }).filter(task => task);
-
-      const tomorrowTasks = Array.from({ length: 3 }, (_, i) => {
-        const title = document.getElementById(`tomorrowTask${i + 1}`).value.trim();
-        const description = document.getElementById(`tomorrowTask${i + 1}Description`).value.trim();
-        return title ? `- **${title}**${description ? `: ${description}` : ""}` : "";
-      }).filter(task => task);
 
       const wins = Array.from(document.getElementsByName("wins")).map(win => win.value.trim()).filter(Boolean);
-      const formattedWins = wins.length > 0 ? wins.map((win, index) => `- ${win}`).join("\n") : "";
+      const winsFormat = document.getElementById("winsFormat").value;
+      const formattedWins = formatList(wins, winsFormat);
 
       const challenges = Array.from(document.getElementsByName("challenges")).map(challenge => challenge.value.trim()).filter(Boolean);
-      const formattedChallenges = challenges.length > 0 ? challenges.map((challenge, index) => `- ${challenge}`).join("\n") : "";
+      const challengesFormat = document.getElementById("challengesFormat").value;
+      const formattedChallenges = formatList(challenges, challengesFormat);
 
       const selfReflections = Array.from(document.getElementsByName("selfReflection")).map(reflection => reflection.value.trim()).filter(Boolean);
-      const formattedReflections = selfReflections.length > 0 ? selfReflections.map((reflection, index) => `- ${reflection}`).join("\n") : "";
+      const selfReflectionsFormat = document.getElementById("selfReflectionsFormat").value;
+      const formattedReflections = formatList(selfReflections, selfReflectionsFormat);
 
-      const dayScore = document.getElementById("dayScore").value;
-      const gratitude = document.getElementById("gratitude").value.trim();
-
-      const habits = {
-        "Meditation": document.getElementById("meditation").checked ? "Y" : "N",
-        "Workout": document.getElementById("workout").checked ? "Y" : "N",
-        "Healthy Eating": document.getElementById("healthyEating").checked ? "Y" : "N",
-        "Drink 2L+ Water": document.getElementById("water").checked ? "Y" : "N",
-        "Read 10 Pages": document.getElementById("read").checked ? "Y" : "N",
-        "Podcast": document.getElementById("podcast").checked ? "Y" : "N"
-      };
-      
-      let podcastDetails = "";
-      if (habits["Podcast"] === "Y") {
-        const podcastTitle = document.getElementById("podcastTitle").value.trim();
-        const podcastNotes = document.getElementById("podcastNotes").value.trim();
-        podcastDetails = `\n\n#### Podcast Details\n- **Title**: ${podcastTitle || "No title provided"}\n- **What I Learned**: ${podcastNotes || "No notes provided"}`;
-      }
-
-      let markdown = `${dayOfWeek}\n\n#### Yesterday’s Top 3 Review\n${yesterdayTasks.join("\n")}\n\n#### Top 3 for Tomorrow\n${tomorrowTasks.join("\n")}\n\n#### Reflections from Today\n`;
-
-      if (formattedWins) markdown += `- **Wins**:\n${formattedWins}\n`;
-      if (formattedChallenges) markdown += `- **Challenges**:\n${formattedChallenges}\n`;
-      if (formattedReflections) markdown += `- **Self-Reflections**:\n${formattedReflections}\n`;
-      
-      markdown += `- **Day Score**: ${dayScore}\n\n#### Habit Tracker`;
-      for (const [habit, status] of Object.entries(habits)) {
-        markdown += `\n- ${habit}: ${status}`;
-      }
-      if (podcastDetails) markdown += podcastDetails;
-      if (gratitude) markdown += `\n\n#### Gratitude\n${gratitude}`;
+      const markdown = `${dayOfWeek}\n\n#### Wins\n${formattedWins}\n\n#### Challenges\n${formattedChallenges}\n\n#### Self-Reflections\n${formattedReflections}`;
 
       navigator.clipboard.writeText(markdown).then(() => {
         showNotification();
-      }).catch(err => {
-        console.error("Could not copy text: ", err);
-      });
+        clearCookies();
+      }).catch(console.error);
     }
   </script>
 </body>
