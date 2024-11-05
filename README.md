@@ -1,9 +1,8 @@
 # 📝 Daily Check-In Form
 
-A responsive and interactive Daily Check-In form built with HTML, JavaScript, and Tailwind CSS. This application allows users to record daily reflections, top tasks, and habits, with a focus on a modern, intuitive interface. Includes features like a dark mode toggle, markdown generation, and clipboard copy.
+A responsive and interactive Daily Check-In form built with HTML, JavaScript, and Tailwind CSS. This application allows users to record daily reflections, top tasks, and habits, with a focus on a modern, intuitive interface. Includes features like markdown generation and clipboard copy.
 
 ## 🌟 Features
-
 - **Top 3 Task Reviews**: Track yesterday’s top 3 tasks with checkboxes for completion and notes on unfinished tasks.
 - **Top 3 for Tomorrow**: Plan the top 3 tasks for the next day with optional descriptions.
 - **Daily Reflections**: Add sections for Wins, Challenges, and Self-Reflections, with formatting options for bulleted or numbered lists.
@@ -44,7 +43,7 @@ Upon completing the form, click **Copy Markdown**. The app generates a structure
 ## 💻 Technology Stack
 
 - **HTML**: Markup structure for the application.
-- **JavaScript**: Interactive functionality, including dark mode toggle, dynamic form fields, and clipboard copy.
+- **JavaScript**: Interactive functionality, including dynamic form fields and clipboard copy.
 - **Tailwind CSS**: Styling for a responsive, modern UI.
 
 ## 🛠️ Future Enhancements
