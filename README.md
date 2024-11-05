@@ -2,8 +2,6 @@
 
 A responsive and interactive Daily Check-In form built with HTML, JavaScript, and Tailwind CSS. This application allows users to record daily reflections, top tasks, and habits, with a focus on a modern, intuitive interface. Includes features like a dark mode toggle, markdown generation, and clipboard copy.
 
-![Dark Mode Screenshot](screenshot.png)
-
 ## 🌟 Features
 
 - **Dark Mode Toggle**: Easily switch between light and dark themes with a sun/moon icon.
