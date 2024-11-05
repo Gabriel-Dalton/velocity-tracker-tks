@@ -63,7 +63,3 @@ Upon completing the form, click **Copy Markdown**. The app generates a structure
 Feel free to fork this repository, make changes, and create a pull request. Contributions to enhance functionality or improve UI/UX are welcome!
 
 Enjoy tracking your day-to-day reflections with this Daily Check-In Form! 😊
-
-### Notes
-- Replace `https://github.com/yourusername/daily-check-in-form.git` with the actual GitHub repository URL.
-- Add screenshots in the repository (`screenshot.png`, `screenshot-light.png`, `screenshot-dark.png`) to visually represent the light and dark modes.
