@@ -12,7 +12,6 @@
 
     <!-- Form Inputs -->
     <form id="checkinForm" class="space-y-4">
-      
       <!-- Yesterday's Top 3 Review -->
       <div>
         <label class="block font-semibold mb-2">Yesterday’s Top 3 Review</label>
@@ -191,10 +190,66 @@
 
     function generateMarkdown() {
       const dayOfWeek = document.getElementById("checkInTitle").textContent;
-      const formattedMarkdown = `${dayOfWeek} - Your Markdown Code Here (Complete the form elements before generating!)`;
-      navigator.clipboard.writeText(formattedMarkdown).then(() => {
+      
+      const yesterdayTasks = Array.from({ length: 3 }, (_, i) => {
+        const title = document.getElementById(`yesterdayTask${i + 1}`).value.trim();
+        const completed = document.getElementById(`yesterdayTask${i + 1}Completed`).checked;
+        const reason = document.getElementById(`yesterdayTask${i + 1}Reason`).value.trim();
+        return title ? `- **${title}**: ${completed ? "Completed" : `Not Completed, Reason: ${reason || "No reason provided"}`}` : "";
+      }).filter(task => task);
+
+      const tomorrowTasks = Array.from({ length: 3 }, (_, i) => {
+        const title = document.getElementById(`tomorrowTask${i + 1}`).value.trim();
+        const description = document.getElementById(`tomorrowTask${i + 1}Description`).value.trim();
+        return title ? `- **${title}**${description ? `: ${description}` : ""}` : "";
+      }).filter(task => task);
+
+      const wins = Array.from(document.getElementsByName("wins")).map(win => win.value.trim()).filter(Boolean);
+      const formattedWins = wins.length > 0 ? wins.map((win, index) => `- ${win}`).join("\n") : "";
+
+      const challenges = Array.from(document.getElementsByName("challenges")).map(challenge => challenge.value.trim()).filter(Boolean);
+      const formattedChallenges = challenges.length > 0 ? challenges.map((challenge, index) => `- ${challenge}`).join("\n") : "";
+
+      const selfReflections = Array.from(document.getElementsByName("selfReflection")).map(reflection => reflection.value.trim()).filter(Boolean);
+      const formattedReflections = selfReflections.length > 0 ? selfReflections.map((reflection, index) => `- ${reflection}`).join("\n") : "";
+
+      const dayScore = document.getElementById("dayScore").value;
+      const gratitude = document.getElementById("gratitude").value.trim();
+
+      const habits = {
+        "Meditation": document.getElementById("meditation").checked ? "Y" : "N",
+        "Workout": document.getElementById("workout").checked ? "Y" : "N",
+        "Healthy Eating": document.getElementById("healthyEating").checked ? "Y" : "N",
+        "Drink 2L+ Water": document.getElementById("water").checked ? "Y" : "N",
+        "Read 10 Pages": document.getElementById("read").checked ? "Y" : "N",
+        "Podcast": document.getElementById("podcast").checked ? "Y" : "N"
+      };
+      
+      let podcastDetails = "";
+      if (habits["Podcast"] === "Y") {
+        const podcastTitle = document.getElementById("podcastTitle").value.trim();
+        const podcastNotes = document.getElementById("podcastNotes").value.trim();
+        podcastDetails = `\n\n#### Podcast Details\n- **Title**: ${podcastTitle || "No title provided"}\n- **What I Learned**: ${podcastNotes || "No notes provided"}`;
+      }
+
+      let markdown = `${dayOfWeek}\n\n#### Yesterday’s Top 3 Review\n${yesterdayTasks.join("\n")}\n\n#### Top 3 for Tomorrow\n${tomorrowTasks.join("\n")}\n\n#### Reflections from Today\n`;
+
+      if (formattedWins) markdown += `- **Wins**:\n${formattedWins}\n`;
+      if (formattedChallenges) markdown += `- **Challenges**:\n${formattedChallenges}\n`;
+      if (formattedReflections) markdown += `- **Self-Reflections**:\n${formattedReflections}\n`;
+      
+      markdown += `- **Day Score**: ${dayScore}\n\n#### Habit Tracker`;
+      for (const [habit, status] of Object.entries(habits)) {
+        markdown += `\n- ${habit}: ${status}`;
+      }
+      if (podcastDetails) markdown += podcastDetails;
+      if (gratitude) markdown += `\n\n#### Gratitude\n${gratitude}`;
+
+      navigator.clipboard.writeText(markdown).then(() => {
         showNotification();
-      }).catch(console.error);
+      }).catch(err => {
+        console.error("Could not copy text: ", err);
+      });
     }
   </script>
 </body>
