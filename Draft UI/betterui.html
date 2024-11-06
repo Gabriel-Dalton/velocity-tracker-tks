@@ -10,15 +10,11 @@
   <div class="container mx-auto max-w-lg bg-white rounded-lg shadow-lg p-8">
     <h2 id="checkInTitle" class="text-3xl font-bold mb-6 text-center">Daily Check-In</h2>
     
-    <!-- Progress Bar -->
     <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
       <div id="progressBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%;"></div>
     </div>
     
-    <!-- Form Inputs -->
     <form id="checkinForm" class="space-y-4" onkeydown="handleKeyNavigation(event)">
-      
-      <!-- Section 1: Yesterday's Task 1 -->
       <div id="section1" class="form-section">
         <h3 class="text-xl font-semibold mb-4">Yesterday's Top 3 Review - Task 1</h3>
         <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring">
@@ -27,10 +23,6 @@
         <button type="button" onclick="nextSection()" class="w-full mt-4 bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700">Next</button>
       </div>
 
-      <!-- Repeat this block for each question, updating IDs and labels as needed -->
-      <!-- (omitting other sections for brevity, but follow the pattern) -->
-
-      <!-- Final Section: Gratitude -->
       <div id="section13" class="form-section hidden">
         <h3 class="text-xl font-semibold mb-4">Gratitude</h3>
         <textarea id="gratitude" placeholder="List things you're grateful for..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"></textarea>
@@ -38,12 +30,10 @@
       </div>
     </form>
     
-    <!-- Notification Popup -->
     <div id="copyNotification" class="fixed top-4 right-4 bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-lg hidden">Copied to clipboard!</div>
   </div>
 
   <script>
-    // Setting today's date in the title
     function setDayInTitle() {
       const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
       const today = new Date();
@@ -51,7 +41,6 @@
     }
     setDayInTitle();
 
-    // Function to move to the next section and update the progress bar
     let currentSection = 1;
     function nextSection() {
       document.getElementById(`section${currentSection}`).classList.add("hidden");
@@ -65,14 +54,12 @@
       document.getElementById("progressBar").style.width = `${progress}%`;
     }
 
-    // Toggle reason textarea if task is not completed
     function toggleReason(taskNumber) {
       const checkbox = document.getElementById(`yesterdayTask${taskNumber}Completed`);
       const reasonTextarea = document.getElementById(`yesterdayTask${taskNumber}Reason`);
       reasonTextarea.classList.toggle("hidden", checkbox.checked);
     }
 
-    // Keyboard navigation using Enter and Arrow Keys
     function handleKeyNavigation(event) {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -80,13 +67,11 @@
       }
     }
 
-    // Markdown generation
     function generateMarkdown() {
       const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
       let markdown = `${dayOfWeek}\n\n#### Yesterday's Top 3 Review\n`;
 
-      // Yesterday's Top 3 Tasks
       for (let i = 1; i <= 3; i++) {
         const taskTitle = document.getElementById(`yesterdayTask${i}`).value.trim();
         const isCompleted = document.getElementById(`yesterdayTask${i}Completed`).checked;
@@ -102,7 +87,6 @@
       }
 
       markdown += `\n#### Top 3 for Tomorrow\n`;
-      // Tomorrow's Tasks
       for (let i = 1; i <= 3; i++) {
         const tomorrowTaskTitle = document.getElementById(`tomorrowTask${i}`).value.trim();
         const tomorrowDescription = document.getElementById(`tomorrowTask${i}Description`).value.trim();
@@ -114,11 +98,6 @@
           markdown += "\n";
         }
       }
-
-      // Add sections for Wins, Challenges, Self-Reflections, Day Score, Habit Tracker, Podcast, and Gratitude
-      // (Add similar logic here to extract data for each remaining section)
-
-      // Copy markdown to clipboard and show notification
       navigator.clipboard.writeText(markdown).then(() => {
         showNotification();
       }).catch(console.error);

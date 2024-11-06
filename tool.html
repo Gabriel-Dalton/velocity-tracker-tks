@@ -10,13 +10,10 @@
   <div class="container mx-auto max-w-lg bg-white rounded-lg shadow-lg p-8">
     <h2 id="checkInTitle" class="text-2xl font-bold mb-4 text-center">Daily Check-In</h2>
 
-    <!-- Form Inputs -->
     <form id="checkinForm" class="space-y-4">
-      <!-- Yesterday's Top 3 Review -->
       <div>
         <label class="block font-semibold mb-2">Yesterday’s Top 3 Review</label>
         
-        <!-- Task 1 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 1</label>
           <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
@@ -24,7 +21,6 @@
           <textarea id="yesterdayTask1Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" oninput="saveToCookies()"></textarea>
         </div>
 
-        <!-- Task 2 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 2</label>
           <input type="text" id="yesterdayTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
@@ -32,7 +28,6 @@
           <textarea id="yesterdayTask2Reason" placeholder="Reason for not completing..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" oninput="saveToCookies()"></textarea>
         </div>
 
-        <!-- Task 3 -->
         <div class="mb-4">
           <label class="block font-semibold">Task 3</label>
           <input type="text" id="yesterdayTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
@@ -41,30 +36,25 @@
         </div>
       </div>
 
-      <!-- Top 3 for Tomorrow -->
       <div>
         <label class="block font-semibold mb-2">Top 3 for Tomorrow</label>
         
-        <!-- Task 1 -->
         <div class="mb-4">
           <input type="text" id="tomorrowTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask1Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
         
-        <!-- Task 2 -->
         <div class="mb-4">
           <input type="text" id="tomorrowTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask2Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
         
-        <!-- Task 3 -->
         <div class="mb-4">
           <input type="text" id="tomorrowTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask3Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
       </div>
 
-      <!-- Reflections from Today -->
       <div id="dynamicSections">
         <div class="flex justify-between items-center mb-2">
           <label class="block font-semibold">Wins</label>
@@ -97,14 +87,12 @@
         <div id="selfReflectionsContainer" class="mb-4 space-y-2"></div>
       </div>
 
-      <!-- Day Score Slider -->
       <div>
         <label class="block font-semibold mb-2">Rate Your Day</label>
         <input type="range" id="dayScore" min="1" max="10" step="0.5" value="5" class="w-full" oninput="updateDayScore(); saveToCookies()">
         <p class="text-center mt-2" id="dayScoreValue">5</p>
       </div>
 
-      <!-- Habit Tracker -->
       <div>
         <label class="block font-semibold mb-2">Habit Tracker</label>
         <div class="grid grid-cols-2 gap-4">
@@ -117,29 +105,24 @@
         </div>
       </div>
 
-      <!-- Podcast Section (Shown only if Podcast is selected) -->
       <div id="podcastSection" class="hidden">
         <label class="block font-semibold mt-4">Podcast Details</label>
         <input type="text" id="podcastTitle" placeholder="Podcast Title" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
         <textarea id="podcastNotes" placeholder="What did you learn or find interesting?" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
       </div>
 
-      <!-- Gratitude -->
       <div>
         <label class="block font-semibold mb-2">Gratitude</label>
         <textarea id="gratitude" placeholder="List things you're grateful for..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
       </div>
 
-      <!-- Generate Markdown Button -->
       <button type="button" onclick="generateMarkdown()" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring">Copy Markdown</button>
     </form>
 
-    <!-- Notification Popup -->
     <div id="copyNotification" class="fixed top-4 right-4 bg-green-500 text-white font-semibold py-2 px-4 rounded shadow-lg hidden">Copied to clipboard!</div>
   </div>
 
   <script>
-    // Set the title with the full date
     function setDayInTitle() {
       const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
       const today = new Date();
@@ -188,7 +171,6 @@
       document.getElementById("dayScoreValue").textContent = document.getElementById("dayScore").value;
     }
 
-    // Save and load from cookies
     function saveToCookies() {
       const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
       fields.forEach(field => {
@@ -234,7 +216,6 @@
     function generateMarkdown() {
       const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
-      // Yesterday’s Top 3 Review
       const yesterdayTask1 = document.getElementById("yesterdayTask1").value.trim();
       const yesterdayTask1Completed = document.getElementById("yesterdayTask1Completed").checked ? "✅ Completed" : "❌ Not Completed";
       const yesterdayTask1Reason = document.getElementById("yesterdayTask1Reason").value.trim();
@@ -249,7 +230,6 @@
 
       const yesterdayReview = `#### Yesterday's Top 3 Review\n- Task 1: ${yesterdayTask1} (${yesterdayTask1Completed})${yesterdayTask1Reason ? ` - Reason: ${yesterdayTask1Reason}` : ""}\n- Task 2: ${yesterdayTask2} (${yesterdayTask2Completed})${yesterdayTask2Reason ? ` - Reason: ${yesterdayTask2Reason}` : ""}\n- Task 3: ${yesterdayTask3} (${yesterdayTask3Completed})${yesterdayTask3Reason ? ` - Reason: ${yesterdayTask3Reason}` : ""}`;
 
-      // Top 3 for Tomorrow
       const tomorrowTask1 = document.getElementById("tomorrowTask1").value.trim();
       const tomorrowTask1Description = document.getElementById("tomorrowTask1Description").value.trim();
 
@@ -261,7 +241,6 @@
 
       const tomorrowTasks = `#### Top 3 for Tomorrow\n- Task 1: ${tomorrowTask1} ${tomorrowTask1Description ? ` - ${tomorrowTask1Description}` : ""}\n- Task 2: ${tomorrowTask2} ${tomorrowTask2Description ? ` - ${tomorrowTask2Description}` : ""}\n- Task 3: ${tomorrowTask3} ${tomorrowTask3Description ? ` - ${tomorrowTask3Description}` : ""}`;
 
-      // Wins, Challenges, and Self-Reflections
       const wins = Array.from(document.getElementsByName("wins")).map(win => win.value.trim()).filter(Boolean);
       const winsFormat = document.getElementById("winsFormat").value;
       const formattedWins = formatList(wins, winsFormat);
@@ -274,10 +253,8 @@
       const selfReflectionsFormat = document.getElementById("selfReflectionsFormat").value;
       const formattedReflections = formatList(selfReflections, selfReflectionsFormat);
 
-      // Day Score
       const dayScore = document.getElementById("dayScore").value;
 
-      // Habit Tracker
       const habits = [
         { id: "meditation", label: "Meditation" },
         { id: "workout", label: "Workout" },
@@ -288,17 +265,13 @@
       ];
       const habitStatus = habits.map(habit => `${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`).join("\n");
 
-      // Podcast Section (only if Podcast is checked)
       const podcastChecked = document.getElementById("podcast").checked;
       const podcastDetails = podcastChecked ? `\n- **Podcast Title**: ${document.getElementById("podcastTitle").value.trim()}\n- **Podcast Notes**: ${document.getElementById("podcastNotes").value.trim()}` : "";
 
-      // Gratitude
       const gratitude = document.getElementById("gratitude").value.trim();
 
-      // Compile everything into Markdown
       const markdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n#### Wins\n${formattedWins}\n\n#### Challenges\n${formattedChallenges}\n\n#### Self-Reflections\n${formattedReflections}\n\n#### Day Score\n- ${dayScore}/10\n\n#### Habit Tracker\n${habitStatus}${podcastDetails}\n\n#### Gratitude\n${gratitude}`;
 
-      // Copy to clipboard and show notification
       navigator.clipboard.writeText(markdown).then(() => {
         showNotification();
       }).catch(console.error);
