@@ -11,7 +11,7 @@
       font-family: 'Poppins', sans-serif;
     }
     #focusMode {
-      display: none; /* Ensure focus mode is hidden by default */
+      display: none;
       position: fixed;
       top: 0;
       left: 0;
@@ -48,7 +48,6 @@
   <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow-lg p-6 space-y-6">
     <h2 class="text-2xl font-bold text-center text-indigo-600">🌟 Weekly Tracker</h2>
 
-    <!-- OKRs Section -->
     <div>
       <label class="block font-semibold text-indigo-500 mb-2">🚀 Upcoming Week's OKRs</label>
       <div id="okrContainer" class="space-y-4">
@@ -65,7 +64,6 @@
       </button>
     </div>
 
-    <!-- Mindset Reflection Section -->
     <div>
       <label class="block font-semibold text-green-500 mb-2">💡 Mindset Reflection</label>
       <textarea id="mindsetReflection" placeholder="Example: This week, I focused on being more intentional with my time by creating deep work blocks and avoiding distractions." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" onclick="enterFocus(this, 'Reflect on what mindset will drive your success this week.')"></textarea>
@@ -74,7 +72,6 @@
       </button>
     </div>
 
-    <!-- Self Reflection Section -->
     <div>
       <label class="block font-semibold text-blue-500 mb-2">🪞 Self Reflection</label>
       <textarea id="selfReflection" placeholder="Example: I learned that I need to communicate my expectations more clearly with my team to avoid misunderstandings." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" onclick="enterFocus(this, 'Think about what you learned about yourself this week.')"></textarea>
@@ -84,48 +81,38 @@
     </div>
   </div>
 
-  <!-- Full-Screen Focus Mode -->
   <div id="focusMode">
     <div id="focusHint"></div>
     <textarea id="focusInput" placeholder="Type here..." onkeydown="handleKeyDown(event)" onblur="exitFocus()"></textarea>
   </div>
 
   <script>
-    let originalElement = null; // Initialize originalElement
+    let originalElement = null; 
 
     function enterFocus(element, hint) {
-      // Save the original element
       originalElement = element;
 
-      // Show the focus mode
       const focusMode = document.getElementById('focusMode');
       focusMode.style.display = 'flex';
 
-      // Show the hint
       const focusHint = document.getElementById('focusHint');
       focusHint.textContent = hint;
 
-      // Copy the original value to the focus input
       const focusInput = document.getElementById('focusInput');
       focusInput.value = element.value;
       focusInput.focus();
     }
 
     function exitFocus() {
-      // Ensure originalElement is defined before proceeding
       if (originalElement) {
-        // Hide the focus mode
         const focusMode = document.getElementById('focusMode');
         focusMode.style.display = 'none';
 
-        // Copy the value back to the original element
         const focusInput = document.getElementById('focusInput');
         originalElement.value = focusInput.value;
 
-        // Clear the focus input
         focusInput.value = '';
 
-        // Reset originalElement
         originalElement = null;
       }
     }
@@ -134,11 +121,11 @@
       const focusInput = document.getElementById('focusInput');
 
       if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault(); // Prevent adding a new line
-        exitFocus(); // Exit focus mode
+        event.preventDefault();
+        exitFocus();
       } else if (event.key === "Enter" && event.shiftKey) {
-        event.preventDefault(); // Prevent default Enter behavior
-        focusInput.value += "\n"; // Add a new line
+        event.preventDefault(); 
+        focusInput.value += "\n"; 
       }
     }
 
