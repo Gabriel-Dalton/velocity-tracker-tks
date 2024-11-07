@@ -10,6 +10,7 @@
     body {
       font-family: 'Poppins', sans-serif;
     }
+
     #focusMode {
       display: none;
       position: fixed;
@@ -17,30 +18,54 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: black;
+      background: rgba(0, 0, 0, 0.8);
       z-index: 1000;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      animation: fadeIn 0.2s ease-in-out;
     }
+
     #focusMode textarea {
-      font-size: 2rem;
+      font-size: 1.5rem;
       padding: 1rem;
       width: 90%;
       height: 50%;
-      border: none;
+      border: 2px solid white;
       border-radius: 10px;
       background: black;
       color: white;
       resize: none;
       outline: none;
-      box-shadow: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
     }
+
     #focusHint {
-      color: gray;
+      color: #aaa;
       margin-bottom: 20px;
       font-size: 1.2rem;
       text-align: center;
+    }
+
+    #toastNotification {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      animation: fadeInOut 3s ease-in-out forwards;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(20px); }
     }
   </style>
 </head>
@@ -48,6 +73,7 @@
   <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow-lg p-6 space-y-6">
     <h2 class="text-2xl font-bold text-center text-indigo-600">🌟 Weekly Tracker</h2>
 
+    <!-- OKRs Section -->
     <div>
       <label class="block font-semibold text-indigo-500 mb-2">🚀 Upcoming Week's OKRs</label>
       <div id="okrContainer" class="space-y-4">
@@ -64,6 +90,7 @@
       </button>
     </div>
 
+    <!-- Mindset Reflection Section -->
     <div>
       <label class="block font-semibold text-green-500 mb-2">💡 Mindset Reflection</label>
       <textarea id="mindsetReflection" placeholder="Example: This week, I focused on being more intentional with my time by creating deep work blocks and avoiding distractions." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" onclick="enterFocus(this, 'Reflect on what mindset will drive your success this week.')"></textarea>
@@ -72,6 +99,7 @@
       </button>
     </div>
 
+    <!-- Self Reflection Section -->
     <div>
       <label class="block font-semibold text-blue-500 mb-2">🪞 Self Reflection</label>
       <textarea id="selfReflection" placeholder="Example: I learned that I need to communicate my expectations more clearly with my team to avoid misunderstandings." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" onclick="enterFocus(this, 'Think about what you learned about yourself this week.')"></textarea>
@@ -81,13 +109,17 @@
     </div>
   </div>
 
+  <!-- Full-Screen Focus Mode -->
   <div id="focusMode">
     <div id="focusHint"></div>
     <textarea id="focusInput" placeholder="Type here..." onkeydown="handleKeyDown(event)" onblur="exitFocus()"></textarea>
   </div>
 
+  <!-- Toast Notification -->
+  <div id="toastNotification">Copied to clipboard!</div>
+
   <script>
-    let originalElement = null; 
+    let originalElement = null;
 
     function enterFocus(element, hint) {
       originalElement = element;
@@ -119,13 +151,12 @@
 
     function handleKeyDown(event) {
       const focusInput = document.getElementById('focusInput');
-
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         exitFocus();
       } else if (event.key === "Enter" && event.shiftKey) {
-        event.preventDefault(); 
-        focusInput.value += "\n"; 
+        event.preventDefault();
+        focusInput.value += "\n";
       }
     }
 
@@ -142,7 +173,15 @@
     function copySection(sectionId) {
       const fields = Array.from(document.querySelectorAll(`#${sectionId} textarea, #${sectionId} input`));
       const content = fields.map(field => field.value.trim()).filter(Boolean).join('\n');
-      navigator.clipboard.writeText(content).then(() => alert("Copied!"));
+      navigator.clipboard.writeText(content).then(() => showToast());
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toastNotification');
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
     }
   </script>
 </body>
