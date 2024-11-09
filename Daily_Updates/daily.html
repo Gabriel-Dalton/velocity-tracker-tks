@@ -13,7 +13,6 @@
     <form id="checkinForm" class="space-y-4">
       <div>
         <label class="block font-semibold mb-2">Yesterday’s Top 3 Review</label>
-        
         <div class="mb-4">
           <label class="block font-semibold">Task 1</label>
           <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
@@ -38,17 +37,14 @@
 
       <div>
         <label class="block font-semibold mb-2">Top 3 for Tomorrow</label>
-        
         <div class="mb-4">
           <input type="text" id="tomorrowTask1" placeholder="Task 1 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask1Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
-        
         <div class="mb-4">
           <input type="text" id="tomorrowTask2" placeholder="Task 2 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask2Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
         </div>
-        
         <div class="mb-4">
           <input type="text" id="tomorrowTask3" placeholder="Task 3 title..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" oninput="saveToCookies()">
           <textarea id="tomorrowTask3Description" placeholder="Optional description..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
@@ -123,162 +119,167 @@
   </div>
 
   <script>
-    function setDayInTitle() {
-      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
-      const today = new Date();
-      document.getElementById("checkInTitle").textContent = `Daily Check-In - ${today.toLocaleDateString("en-US", options)}`;
+function setDayInTitle() {
+  const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+  const today = new Date();
+  document.getElementById("checkInTitle").textContent = `Daily Check-In - ${today.toLocaleDateString("en-US", options)}`;
+}
+setDayInTitle();
+
+function addReflectionField(containerId, sectionType) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement("div");
+  div.className = "flex items-center mb-2";
+
+  const input = document.createElement("textarea");
+  input.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
+  input.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
+  input.name = sectionType;
+  input.oninput = saveToCookies;
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.className = "ml-2 text-red-500";
+  deleteButton.innerHTML = `
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M6 2a2 2 0 00-2 2v1H3a1 1 0 100 2h14a1 1 0 100-2h-1V4a2 2 0 00-2-2H6zM5 9a1 1 0 011-1h8a1 1 0 011 1v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9z" />
+    </svg>`;
+  deleteButton.onclick = () => {
+    div.remove();
+    saveToCookies();
+  };
+
+  div.appendChild(input);
+  div.appendChild(deleteButton);
+  container.appendChild(div);
+  saveToCookies();
+}
+
+function toggleReason(taskNumber) {
+  const checkbox = document.getElementById(`yesterdayTask${taskNumber}Completed`);
+  const reasonTextarea = document.getElementById(`yesterdayTask${taskNumber}Reason`);
+  reasonTextarea.classList.toggle("hidden", checkbox.checked);
+  saveToCookies();
+}
+
+function togglePodcastSection() {
+  document.getElementById("podcastSection").classList.toggle("hidden", !document.getElementById("podcast").checked);
+}
+
+function updateDayScore() {
+  document.getElementById("dayScoreValue").textContent = document.getElementById("dayScore").value;
+}
+
+function saveToCookies() {
+  const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+  fields.forEach(field => {
+    document.cookie = `${field.id}=${encodeURIComponent(field.value)}; path=/;`;
+  });
+}
+
+function loadFromCookies() {
+  const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+    const [name, value] = cookie.split("=");
+    acc[name] = decodeURIComponent(value);
+    return acc;
+  }, {});
+
+  for (let id in cookies) {
+    const field = document.getElementById(id);
+    if (field) {
+      if (field.type === "checkbox") field.checked = cookies[id] === "true";
+      else field.value = cookies[id];
     }
-    setDayInTitle();
+  }
+}
 
-    function addReflectionField(containerId, sectionType) {
-      const container = document.getElementById(containerId);
-      const div = document.createElement("div");
-      div.className = "flex items-center mb-2";
+function clearCookies() {
+  const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+  fields.forEach(field => {
+    document.cookie = `${field.id}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  });
+}
 
-      const input = document.createElement("textarea");
-      input.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
-      input.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
-      input.name = sectionType;
-      input.oninput = saveToCookies;
+loadFromCookies();
 
-      const deleteButton = document.createElement("button");
-      deleteButton.type = "button";
-      deleteButton.className = "ml-2 text-red-500";
-      deleteButton.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-          <path d="M6 2a2 2 0 00-2 2v1H3a1 1 0 100 2h14a1 1 0 100-2h-1V4a2 2 0 00-2-2H6zM5 9a1 1 0 011-1h8a1 1 0 011 1v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9z" />
-        </svg>`;
-      deleteButton.onclick = () => {
-        div.remove();
-        saveToCookies();
-      };
+function formatList(items, formatType) {
+  return items.map((item, index) => formatType === "numbered" ? `${index + 1}. ${item}` : `- ${item}`).join("\n");
+}
 
-      div.appendChild(input);
-      div.appendChild(deleteButton);
-      container.appendChild(div);
-      saveToCookies();
-    }
+function showNotification(message = "Copied to clipboard!") {
+  const notification = document.getElementById("copyNotification");
+  notification.textContent = message;
+  notification.classList.remove("hidden");
+  setTimeout(() => notification.classList.add("hidden"), 2000);
+}
 
-    function toggleReason(taskNumber) {
-      const checkbox = document.getElementById(`yesterdayTask${taskNumber}Completed`);
-      const reasonTextarea = document.getElementById(`yesterdayTask${taskNumber}Reason`);
-      reasonTextarea.classList.toggle("hidden", checkbox.checked);
-      saveToCookies();
-    }
+function generateMarkdown() {
+  const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
-    function togglePodcastSection() {
-      document.getElementById("podcastSection").classList.toggle("hidden", !document.getElementById("podcast").checked);
-    }
+  const yesterdayTask1 = document.getElementById("yesterdayTask1").value.trim();
+  const yesterdayTask1Completed = document.getElementById("yesterdayTask1Completed").checked ? "✅ Completed" : "❌ Not Completed";
+  const yesterdayTask1Reason = document.getElementById("yesterdayTask1Reason").value.trim();
 
-    function updateDayScore() {
-      document.getElementById("dayScoreValue").textContent = document.getElementById("dayScore").value;
-    }
+  const yesterdayTask2 = document.getElementById("yesterdayTask2").value.trim();
+  const yesterdayTask2Completed = document.getElementById("yesterdayTask2Completed").checked ? "✅ Completed" : "❌ Not Completed";
+  const yesterdayTask2Reason = document.getElementById("yesterdayTask2Reason").value.trim();
 
-    function saveToCookies() {
-      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
-      fields.forEach(field => {
-        document.cookie = `${field.id}=${encodeURIComponent(field.value)}; path=/;`;
-      });
-    }
+  const yesterdayTask3 = document.getElementById("yesterdayTask3").value.trim();
+  const yesterdayTask3Completed = document.getElementById("yesterdayTask3Completed").checked ? "✅ Completed" : "❌ Not Completed";
+  const yesterdayTask3Reason = document.getElementById("yesterdayTask3Reason").value.trim();
 
-    function loadFromCookies() {
-      const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
-        const [name, value] = cookie.split("=");
-        acc[name] = decodeURIComponent(value);
-        return acc;
-      }, {});
+  const yesterdayReview = `#### Yesterday's Top 3 Review\n- Task 1: ${yesterdayTask1} (${yesterdayTask1Completed})${yesterdayTask1Reason ? ` - Reason: ${yesterdayTask1Reason}` : ""}\n- Task 2: ${yesterdayTask2} (${yesterdayTask2Completed})${yesterdayTask2Reason ? ` - Reason: ${yesterdayTask2Reason}` : ""}\n- Task 3: ${yesterdayTask3} (${yesterdayTask3Completed})${yesterdayTask3Reason ? ` - Reason: ${yesterdayTask3Reason}` : ""}`;
 
-      for (let id in cookies) {
-        const field = document.getElementById(id);
-        if (field) {
-          if (field.type === "checkbox") field.checked = cookies[id] === "true";
-          else field.value = cookies[id];
-        }
-      }
-    }
+  const tomorrowTask1 = document.getElementById("tomorrowTask1").value.trim();
+  const tomorrowTask1Description = document.getElementById("tomorrowTask1Description").value.trim();
 
-    function clearCookies() {
-      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
-      fields.forEach(field => {
-        document.cookie = `${field.id}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-      });
-    }
+  const tomorrowTask2 = document.getElementById("tomorrowTask2").value.trim();
+  const tomorrowTask2Description = document.getElementById("tomorrowTask2Description").value.trim();
 
-    loadFromCookies();
+  const tomorrowTask3 = document.getElementById("tomorrowTask3").value.trim();
+  const tomorrowTask3Description = document.getElementById("tomorrowTask3Description").value.trim();
 
-    function formatList(items, formatType) {
-      return items.map((item, index) => formatType === "numbered" ? `${index + 1}. ${item}` : `- ${item}`).join("\n");
-    }
+  const tomorrowTasks = `#### Top 3 for Tomorrow\n- Task 1: ${tomorrowTask1} ${tomorrowTask1Description ? ` - ${tomorrowTask1Description}` : ""}\n- Task 2: ${tomorrowTask2} ${tomorrowTask2Description ? ` - ${tomorrowTask2Description}` : ""}\n- Task 3: ${tomorrowTask3} ${tomorrowTask3Description ? ` - ${tomorrowTask3Description}` : ""}`;
 
-    function showNotification() {
-      const notification = document.getElementById("copyNotification");
-      notification.classList.remove("hidden");
-      setTimeout(() => notification.classList.add("hidden"), 2000);
-    }
+  const wins = Array.from(document.getElementsByName("wins")).map(win => win.value.trim()).filter(Boolean);
+  const winsFormat = document.getElementById("winsFormat").value;
+  const formattedWins = formatList(wins, winsFormat);
 
-    function generateMarkdown() {
-      const dayOfWeek = document.getElementById("checkInTitle").textContent;
+  const challenges = Array.from(document.getElementsByName("challenges")).map(challenge => challenge.value.trim()).filter(Boolean);
+  const challengesFormat = document.getElementById("challengesFormat").value;
+  const formattedChallenges = formatList(challenges, challengesFormat);
 
-      const yesterdayTask1 = document.getElementById("yesterdayTask1").value.trim();
-      const yesterdayTask1Completed = document.getElementById("yesterdayTask1Completed").checked ? "✅ Completed" : "❌ Not Completed";
-      const yesterdayTask1Reason = document.getElementById("yesterdayTask1Reason").value.trim();
+  const selfReflections = Array.from(document.getElementsByName("selfReflection")).map(reflection => reflection.value.trim()).filter(Boolean);
+  const selfReflectionsFormat = document.getElementById("selfReflectionsFormat").value;
+  const formattedReflections = formatList(selfReflections, selfReflectionsFormat);
 
-      const yesterdayTask2 = document.getElementById("yesterdayTask2").value.trim();
-      const yesterdayTask2Completed = document.getElementById("yesterdayTask2Completed").checked ? "✅ Completed" : "❌ Not Completed";
-      const yesterdayTask2Reason = document.getElementById("yesterdayTask2Reason").value.trim();
+  const dayScore = document.getElementById("dayScore").value;
 
-      const yesterdayTask3 = document.getElementById("yesterdayTask3").value.trim();
-      const yesterdayTask3Completed = document.getElementById("yesterdayTask3Completed").checked ? "✅ Completed" : "❌ Not Completed";
-      const yesterdayTask3Reason = document.getElementById("yesterdayTask3Reason").value.trim();
+  const habits = [
+    { id: "meditation", label: "Meditation" },
+    { id: "workout", label: "Workout" },
+    { id: "healthyEating", label: "Healthy Eating" },
+    { id: "water", label: "Drink 2L+ Water" },
+    { id: "read", label: "Read 10 Pages" },
+    { id: "podcast", label: "Podcast" }
+  ];
+  const habitStatus = habits.map(habit => `${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`).join("\n");
 
-      const yesterdayReview = `#### Yesterday's Top 3 Review\n- Task 1: ${yesterdayTask1} (${yesterdayTask1Completed})${yesterdayTask1Reason ? ` - Reason: ${yesterdayTask1Reason}` : ""}\n- Task 2: ${yesterdayTask2} (${yesterdayTask2Completed})${yesterdayTask2Reason ? ` - Reason: ${yesterdayTask2Reason}` : ""}\n- Task 3: ${yesterdayTask3} (${yesterdayTask3Completed})${yesterdayTask3Reason ? ` - Reason: ${yesterdayTask3Reason}` : ""}`;
+  const podcastChecked = document.getElementById("podcast").checked;
+  const podcastDetails = podcastChecked ? `\n- **Podcast Title**: ${document.getElementById("podcastTitle").value.trim()}\n- **Podcast Notes**: ${document.getElementById("podcastNotes").value.trim()}` : "";
 
-      const tomorrowTask1 = document.getElementById("tomorrowTask1").value.trim();
-      const tomorrowTask1Description = document.getElementById("tomorrowTask1Description").value.trim();
+  const gratitude = document.getElementById("gratitude").value.trim();
 
-      const tomorrowTask2 = document.getElementById("tomorrowTask2").value.trim();
-      const tomorrowTask2Description = document.getElementById("tomorrowTask2Description").value.trim();
+  const markdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n#### Wins\n${formattedWins}\n\n#### Challenges\n${formattedChallenges}\n\n#### Self-Reflections\n${formattedReflections}\n\n#### Day Score\n- ${dayScore}/10\n\n#### Habit Tracker\n${habitStatus}${podcastDetails}\n\n#### Gratitude\n${gratitude}`;
 
-      const tomorrowTask3 = document.getElementById("tomorrowTask3").value.trim();
-      const tomorrowTask3Description = document.getElementById("tomorrowTask3Description").value.trim();
+  navigator.clipboard.writeText(markdown).then(() => {
+    showNotification();
+  }).catch(console.error);
+}
 
-      const tomorrowTasks = `#### Top 3 for Tomorrow\n- Task 1: ${tomorrowTask1} ${tomorrowTask1Description ? ` - ${tomorrowTask1Description}` : ""}\n- Task 2: ${tomorrowTask2} ${tomorrowTask2Description ? ` - ${tomorrowTask2Description}` : ""}\n- Task 3: ${tomorrowTask3} ${tomorrowTask3Description ? ` - ${tomorrowTask3Description}` : ""}`;
-
-      const wins = Array.from(document.getElementsByName("wins")).map(win => win.value.trim()).filter(Boolean);
-      const winsFormat = document.getElementById("winsFormat").value;
-      const formattedWins = formatList(wins, winsFormat);
-
-      const challenges = Array.from(document.getElementsByName("challenges")).map(challenge => challenge.value.trim()).filter(Boolean);
-      const challengesFormat = document.getElementById("challengesFormat").value;
-      const formattedChallenges = formatList(challenges, challengesFormat);
-
-      const selfReflections = Array.from(document.getElementsByName("selfReflection")).map(reflection => reflection.value.trim()).filter(Boolean);
-      const selfReflectionsFormat = document.getElementById("selfReflectionsFormat").value;
-      const formattedReflections = formatList(selfReflections, selfReflectionsFormat);
-
-      const dayScore = document.getElementById("dayScore").value;
-
-      const habits = [
-        { id: "meditation", label: "Meditation" },
-        { id: "workout", label: "Workout" },
-        { id: "healthyEating", label: "Healthy Eating" },
-        { id: "water", label: "Drink 2L+ Water" },
-        { id: "read", label: "Read 10 Pages" },
-        { id: "podcast", label: "Podcast" }
-      ];
-      const habitStatus = habits.map(habit => `${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`).join("\n");
-
-      const podcastChecked = document.getElementById("podcast").checked;
-      const podcastDetails = podcastChecked ? `\n- **Podcast Title**: ${document.getElementById("podcastTitle").value.trim()}\n- **Podcast Notes**: ${document.getElementById("podcastNotes").value.trim()}` : "";
-
-      const gratitude = document.getElementById("gratitude").value.trim();
-
-      const markdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n#### Wins\n${formattedWins}\n\n#### Challenges\n${formattedChallenges}\n\n#### Self-Reflections\n${formattedReflections}\n\n#### Day Score\n- ${dayScore}/10\n\n#### Habit Tracker\n${habitStatus}${podcastDetails}\n\n#### Gratitude\n${gratitude}`;
-
-      navigator.clipboard.writeText(markdown).then(() => {
-        showNotification();
-      }).catch(console.error);
-    }
+function generateSlackMarkdown() {
+  generateMarkdown();
+}
   </script>
 </body>
 </html>
