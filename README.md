@@ -37,7 +37,7 @@ A comprehensive toolkit for tracking daily and weekly progress, built with HTML,
 
 2. **Open in Your Browser**  
    - Navigate to the folder where you extracted the files.
-   - Open `index.html` in your preferred browser.
+   - Open `daily.html` + `weekly.html` in your preferred browser.
 
 3. **Start Tracking**  
    - Use the **Daily Check-In** form to record your tasks, reflections, and more.
@@ -56,7 +56,7 @@ A comprehensive toolkit for tracking daily and weekly progress, built with HTML,
    ```
 
 2. **Open in Browser**  
-   - Locate the `index.html` file in the cloned folder.
+   - Locate the `daily.html` + `weekly.html` file in the cloned folder.
    - Right-click and open it in your browser.
 
 3. **Start Tracking**  
