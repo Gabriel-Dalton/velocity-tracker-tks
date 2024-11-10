@@ -4,6 +4,46 @@ A comprehensive toolkit for tracking daily and weekly progress, built with HTML,
 
 ---
 
+## 🚀 Getting Started
+
+**Velocity Tools** is designed to be easy to use, even for beginners! Follow the steps below to set it up:
+
+### 🌐 Option 1: Download and Open
+
+1. **Download the Repository**  
+   - Click the green "Code" button on the repository's main page and select "Download ZIP."
+   - Extract the contents of the ZIP file to a folder on your computer.
+
+2. **Open in Your Browser**  
+   - Navigate to the folder where you extracted the files.
+   - Open `index.html` in your preferred browser.
+
+3. **Start Tracking**  
+   - Use the **Daily Check-In** form to record your tasks, reflections, and more.
+   - Explore the **Weekly Tracker** for planning and reviewing your week.
+
+### 🖥️ Option 2: Clone and Run
+
+1. **Clone the Repository**  
+   Open your terminal and run the following command:  
+   ```bash
+   git clone https://github.com/Gabriel-Dalton/velocity-tracker-tks.git
+   ```
+   Navigate into the folder:  
+   ```bash
+   cd velocity-tracker-tks
+   ```
+
+2. **Open in Browser**  
+   - Locate the `index.html` file in the cloned folder.
+   - Right-click and open it in your browser.
+
+3. **Start Tracking**  
+   - Fill out the **Daily Check-In** form for daily progress.
+   - Experiment with the **Weekly Tracker**.
+
+---
+
 ## 🌟 Features
 
 ### 📝 Daily Check-In Form
