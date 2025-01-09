@@ -217,15 +217,15 @@
       const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
       const yesterdayTask1 = document.getElementById("yesterdayTask1").value.trim();
-      const yesterdayTask1Completed = document.getElementById("yesterdayTask1Completed").checked ? ":white_check_mark: Completed" : ":x: Not Completed";
+      const yesterdayTask1Completed = document.getElementById("yesterdayTask1Completed").checked ? "✅ Completed" : "❌ Not Completed";
       const yesterdayTask1Reason = document.getElementById("yesterdayTask1Reason").value.trim();
 
       const yesterdayTask2 = document.getElementById("yesterdayTask2").value.trim();
-      const yesterdayTask2Completed = document.getElementById("yesterdayTask2Completed").checked ? ":white_check_mark: Completed" : ":x: Not Completed";
+      const yesterdayTask2Completed = document.getElementById("yesterdayTask2Completed").checked ? "✅ Completed" : "❌ Not Completed";
       const yesterdayTask2Reason = document.getElementById("yesterdayTask2Reason").value.trim();
 
       const yesterdayTask3 = document.getElementById("yesterdayTask3").value.trim();
-      const yesterdayTask3Completed = document.getElementById("yesterdayTask3Completed").checked ? ":white_check_mark: Completed" : ":x: Not Completed";
+      const yesterdayTask3Completed = document.getElementById("yesterdayTask3Completed").checked ? "✅ Completed" : "❌ Not Completed";
       const yesterdayTask3Reason = document.getElementById("yesterdayTask3Reason").value.trim();
 
       const yesterdayReview = `*Yesterday's Top 3 Review:*\n• Task 1: *${yesterdayTask1}* (${yesterdayTask1Completed})${yesterdayTask1Reason ? ` - _Reason: ${yesterdayTask1Reason}_` : ""}\n• Task 2: *${yesterdayTask2}* (${yesterdayTask2Completed})${yesterdayTask2Reason ? ` - _Reason: ${yesterdayTask2Reason}_` : ""}\n• Task 3: *${yesterdayTask3}* (${yesterdayTask3Completed})${yesterdayTask3Reason ? ` - _Reason: ${yesterdayTask3Reason}_` : ""}`;
@@ -256,7 +256,7 @@
         { id: "podcast", label: "Podcast" }
       ];
       const habitStatus = habits
-        .map(habit => `• ${habit.label}: ${document.getElementById(habit.id).checked ? ":white_check_mark:" : ":x:"}`)
+        .map(habit => `• ${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`)
         .join("\n");
 
       const podcastChecked = document.getElementById("podcast").checked;
