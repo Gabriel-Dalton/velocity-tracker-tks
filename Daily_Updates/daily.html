@@ -98,6 +98,7 @@
           <label><input type="checkbox" id="water" onchange="saveToCookies()"> Drink 2L+ Water</label>
           <label><input type="checkbox" id="read" onchange="saveToCookies()"> Read 10 Pages</label>
           <label><input type="checkbox" id="podcast" onchange="togglePodcastSection(); saveToCookies()"> Podcast</label>
+          <label><input type="checkbox" id="duolingo" onchange="saveToCookies()"> Duolingo</label>
         </div>
       </div>
 
@@ -253,7 +254,8 @@
         { id: "healthyEating", label: "Healthy Eating" },
         { id: "water", label: "Drink 2L+ Water" },
         { id: "read", label: "Read 10 Pages" },
-        { id: "podcast", label: "Podcast" }
+        { id: "podcast", label: "Podcast" },
+        { id: "duolingo", label: "Duolingo" }
       ];
       const habitStatus = habits
         .map(habit => `• ${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`)
