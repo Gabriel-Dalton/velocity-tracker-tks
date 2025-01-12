@@ -14,6 +14,12 @@
     function hideClearModal() {
       document.getElementById("clearDataModal").classList.add("hidden");
     }
+
+    document.getElementById("clearDataModal").addEventListener("click", (e) => {
+  if (e.target === document.getElementById("clearDataModal")) {
+    hideClearModal();
+  }
+});
   
     function clearLocalStorage() {
   localStorage.removeItem("dailyCheckInData");
@@ -45,6 +51,7 @@
     function loadFromLocalStorage() {
       const data = JSON.parse(localStorage.getItem("dailyCheckInData")) || {};
   
+      // Restore fields
       for (let id in data) {
         const field = document.getElementById(id);
         if (field) {
@@ -98,7 +105,7 @@
       const textarea = document.createElement("textarea");
       textarea.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
       textarea.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
-      textarea.value = value; 
+      textarea.value = value; // Restore saved value if provided
       textarea.addEventListener("input", saveToLocalStorage);
   
       const deleteButton = document.createElement("button");
