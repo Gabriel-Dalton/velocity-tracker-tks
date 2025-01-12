@@ -91,14 +91,18 @@
 
       <div>
         <label class="block font-semibold mb-2">Habit Tracker</label>
-        <div class="grid grid-cols-2 gap-4">
-          <label><input type="checkbox" id="meditation" onchange="saveToCookies()"> Meditation</label>
-          <label><input type="checkbox" id="workout" onchange="saveToCookies()"> Workout</label>
-          <label><input type="checkbox" id="healthyEating" onchange="saveToCookies()"> Healthy Eating</label>
-          <label><input type="checkbox" id="water" onchange="saveToCookies()"> Drink 2L+ Water</label>
-          <label><input type="checkbox" id="read" onchange="saveToCookies()"> Read 10 Pages</label>
-          <label><input type="checkbox" id="podcast" onchange="togglePodcastSection(); saveToCookies()"> Podcast</label>
-          <label><input type="checkbox" id="duolingo" onchange="saveToCookies()"> Duolingo</label>
+        <div class="grid grid-cols-2 gap-4 items-center">
+          <label><input type="checkbox" id="meditation" onchange="saveToCookies()"> 🧘 Meditation</label>
+          <label><input type="checkbox" id="workout" onchange="saveToCookies()"> 💪 Workout</label>
+          <label><input type="checkbox" id="healthyEating" onchange="saveToCookies()"> 🥗 Healthy Eating</label>
+          <label><input type="checkbox" id="water" onchange="saveToCookies()"> 💧 Drink 2L+ Water</label>
+          <label><input type="checkbox" id="read" onchange="saveToCookies()"> 📖 Read 10 Pages</label>
+          <label><input type="checkbox" id="podcast" onchange="togglePodcastSection(); saveToCookies()"> 🎧 Podcast</label>
+          <label class="flex items-center space-x-2">
+            <input type="checkbox" id="duolingo" onchange="saveToCookies()"> 
+            <img src="/assets/duolingo.png" alt="Duolingo Logo" class="h-6 w-6 rounded">
+            <span>Duolingo</span>
+          </label>
         </div>
       </div>
 
