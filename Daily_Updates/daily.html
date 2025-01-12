@@ -5,25 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Daily Check-In</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <script src="/Daily_Updates/assets/saveData.js"></script>
-  <script src="/Daily_Updates/assets/modal.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", () => {
+
+    function showClearModal() {
+      document.getElementById("clearDataModal").classList.remove("hidden");
+    }
+  
+    function hideClearModal() {
+      document.getElementById("clearDataModal").classList.add("hidden");
+    }
+  
+    function clearLocalStorage() {
+  localStorage.removeItem("dailyCheckInData");
+
+  const saveFields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+  saveFields.forEach(field => {
+    if (field.type === "checkbox") {
+      field.checked = false; 
+    } else {
+      field.value = ""; 
+    }
+  });
+
+  const dynamicSections = ["winsContainer", "challengesContainer", "selfReflectionsContainer"];
+  dynamicSections.forEach(sectionId => {
+    const container = document.getElementById(sectionId);
+    container.innerHTML = ""; 
+  });
+
+  document.cookie.split(";").forEach(cookie => {
+    const [name] = cookie.split("=");
+    document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  });
+
+  hideClearModal();
+}
+
+  
+    function loadFromLocalStorage() {
+      const data = JSON.parse(localStorage.getItem("dailyCheckInData")) || {};
+  
+      for (let id in data) {
+        const field = document.getElementById(id);
+        if (field) {
+          if (field.type === "checkbox") {
+            field.checked = data[id];
+          } else {
+            field.value = data[id];
+          }
+        }
+      }
+  
+      const dynamicSections = ["winsContainer", "challengesContainer", "selfReflectionsContainer"];
+      dynamicSections.forEach(sectionId => {
+        const container = document.getElementById(sectionId);
+        const items = data[sectionId] || [];
+        items.forEach(value => {
+          addReflectionField(sectionId, sectionId.slice(0, -9), value);
+        });
+      });
+    }
+  
+    function saveToLocalStorage() {
+      const data = {};
+  
+      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+      fields.forEach(field => {
+        if (field.type === "checkbox") {
+          data[field.id] = field.checked;
+        } else {
+          data[field.id] = field.value;
+        }
+      });
+  
+      const dynamicSections = ["winsContainer", "challengesContainer", "selfReflectionsContainer"];
+      dynamicSections.forEach(sectionId => {
+        const items = [];
+        document.querySelectorAll(`#${sectionId} textarea`).forEach(textarea => {
+          items.push(textarea.value);
+        });
+        data[sectionId] = items;
+      });
+  
+      localStorage.setItem("dailyCheckInData", JSON.stringify(data));
+    }
+  
+    function addReflectionField(containerId, sectionType, value = "") {
+      const container = document.getElementById(containerId);
+      const div = document.createElement("div");
+      div.className = "flex items-center mb-2";
+  
+      const textarea = document.createElement("textarea");
+      textarea.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
+      textarea.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
+      textarea.value = value; 
+      textarea.addEventListener("input", saveToLocalStorage);
+  
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.className = "ml-2 text-red-500";
+      deleteButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M6 2a2 2 0 00-2 2v1H3a1 1 0 100 2h14a1 1 0 100-2h-1V4a2 2 0 00-2-2H6zM5 9a1 1 0 011-1h8a1 1 0 011 1v7a2 2 0 01-2 2H7a2 2 0 01-2-2V9z" />
+        </svg>`;
+      deleteButton.addEventListener("click", () => {
+        div.remove();
+        saveToLocalStorage();
+      });
+  
+      div.appendChild(textarea);
+      div.appendChild(deleteButton);
+      container.appendChild(div);
+    }
+  
+    document.getElementById("gearButton").addEventListener("click", showClearModal);
+    document.getElementById("closeModal").addEventListener("click", hideClearModal);
+    document.getElementById("confirmClear").addEventListener("click", clearLocalStorage);
+  
+    const saveFields = document.querySelectorAll("#checkinForm input, #checkinForm textarea, #checkinForm select");
+    saveFields.forEach(field => {
+      field.addEventListener("input", saveToLocalStorage);
+      field.addEventListener("change", saveToLocalStorage);
+    });
+  
+    loadFromLocalStorage();
+  });
+  </script>
+
 </head>
-<button id="openModal" class="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md hover:shadow-lg focus:outline-none">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 hover:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
-    <path fill-rule="evenodd" d="M10 2a1 1 0 01.832.445l.967 1.45a1 1 0 00.742.428l1.68.246a1 1 0 01.554 1.704l-1.216 1.217a1 1 0 00-.28.878l.272 1.634a1 1 0 01-1.45 1.054L10 9.908l-1.45.762a1 1 0 01-1.45-1.054l.272-1.634a1 1 0 00-.28-.878L6.876 6.273a1 1 0 01.554-1.704l1.68-.246a1 1 0 00.742-.428l.967-1.45A1 1 0 0110 2zm0 2.75l-.538.806a3 3 0 01-2.226 1.285l-1.682.247.963.964a3 3 0 01.842 2.621l-.272 1.633 1.633-.86a3 3 0 012.788 0l1.633.86-.272-1.633a3 3 0 01.842-2.621l.963-.964-1.682-.247a3 3 0 01-2.226-1.285L10 4.75z" clip-rule="evenodd"/>
-    <path d="M12 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+<button id="gearButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2v2m6.36-1.36l-1.42 1.42M18 12h-2m-1.36 6.36l1.42 1.42M12 18v2m-6.36-1.36l1.42-1.42M6 12H4m1.36-6.36L4 4.64M12 6a6 6 0 100 12 6 6 0 000-12z" />
   </svg>
 </button>
-<div id="clearDataModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-  <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-    <h2 class="text-lg font-semibold text-gray-700 mb-4">Clear All Saved Data</h2>
-    <p class="text-gray-600 mb-6">Are you sure you want to clear all saved data? This action cannot be undone.</p>
-    <div class="flex justify-end space-x-4">
-      <button id="closeModal" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 focus:outline-none">Cancel</button>
-      <button id="confirmClear" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none">Clear</button>
+
+<div id="clearDataModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg p-6 shadow-lg">
+    <h2 class="text-lg font-semibold mb-4">Clear Form Data</h2>
+    <p class="text-sm text-gray-600 mb-4">Are you sure you want to clear all saved data? This action cannot be undone.</p>
+    <div class="flex justify-end space-x-2">
+      <button id="closeModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+      <button id="confirmClear" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Clear Data</button>
     </div>
   </div>
 </div>
+
+
   <body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
   <div class="container mx-auto max-w-lg bg-white rounded-lg shadow-lg p-8">
     <h2 id="checkInTitle" class="text-2xl font-bold mb-4 text-center">Daily Check-In</h2>
