@@ -51,7 +51,6 @@
     function loadFromLocalStorage() {
       const data = JSON.parse(localStorage.getItem("dailyCheckInData")) || {};
   
-      // Restore fields
       for (let id in data) {
         const field = document.getElementById(id);
         if (field) {
@@ -140,8 +139,8 @@
   </script>
 
 </head>
-<button id="gearButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<button id="gearButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none transition transform hover:scale-105">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 p-2 bg-white rounded-full shadow-lg hover:shadow-xl" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 2v2m6.36-1.36l-1.42 1.42M18 12h-2m-1.36 6.36l1.42 1.42M12 18v2m-6.36-1.36l1.42-1.42M6 12H4m1.36-6.36L4 4.64M12 6a6 6 0 100 12 6 6 0 000-12z" />
   </svg>
 </button>
