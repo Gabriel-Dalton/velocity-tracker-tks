@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slack Markdown Formatter</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow-lg p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center">Slack Markdown Formatter</h1>
+    <textarea id="slackInput" placeholder="Paste your Slack markdown here..." 
+              class="w-full h-48 p-3 border rounded-lg focus:outline-none focus:ring mb-4"></textarea>
+    <button id="formatButton" 
+            class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring">
+      Format and Copy
+    </button>
+    <div id="notification" class="hidden mt-4 p-3 text-center bg-green-500 text-white rounded-lg">Formatted text copied to clipboard!</div>
+  </div>
+  <script>
+    const emojiMap = {
+      ":white_check_mark:": "✅",
+      ":x:": "❌",
+      ":arrows_counterclockwise:": "🔄",
+      ":heart:": "❤️",
+      ":star:": "⭐",
+      ":clap:": "👏",
+    };
+
+    function replaceSlackEmojis(text) {
+      return text.replace(/:\w+:/g, match => emojiMap[match] || match);
+    }
+
+    document.getElementById("formatButton").addEventListener("click", () => {
+      const input = document.getElementById("slackInput").value;
+      const formattedText = replaceSlackEmojis(input);
+
+      navigator.clipboard.writeText(formattedText).then(() => {
+        const notification = document.getElementById("notification");
+        notification.classList.remove("hidden");
+        setTimeout(() => notification.classList.add("hidden"), 2000);
+      }).catch(console.error);
+    });
+  </script>
+</body>
+</html>

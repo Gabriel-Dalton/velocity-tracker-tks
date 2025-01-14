@@ -37,14 +37,21 @@
 
 <div id="clearDataModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
   <div class="bg-white rounded-lg p-6 shadow-lg">
+    <h2 class="text-lg font-semibold mb-4">Formatting Error?</h2>
+    <a href="/Daily_Updates/formatter.html" class="underline">
+      <p class="text-sm text-gray-600 mb-4">Visit the Slack to Dropbox Paper Formatter Page</p>
+    </a>
     <h2 class="text-lg font-semibold mb-4">Clear Form Data</h2>
-    <p class="text-sm text-gray-600 mb-4">Are you sure you want to clear all saved data? This action cannot be undone.</p>
+    <p class="text-sm text-gray-600 mb-4">
+      Are you sure you want to clear all saved data? This action cannot be undone.
+    </p>
     <div class="flex justify-end space-x-2">
       <button id="closeModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
       <button id="confirmClear" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Clear Data</button>
     </div>
   </div>
 </div>
+
 
 
 <body class="bg-gray-100 min-h-screen flex flex-col">
