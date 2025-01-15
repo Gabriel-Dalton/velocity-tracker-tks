@@ -58,7 +58,6 @@
     <h2 id="checkInTitle" class="text-2xl font-bold mb-4 text-center">Daily Check-In</h2>
 <form id="checkinForm" class="space-y-4">
   <div class="task-review-container">
-    <!-- Task 1 -->
     <div class="task-container">
       <label class="task-title">Task 1</label>
       <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." 
@@ -68,17 +67,17 @@
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask1Completed" 
                  onchange="toggleCheckbox(1, 'completed'); saveToCookies()"> 
-          <span class="checkbox-text">Completed</span>
+          <span class="checkbox-text">✅ Completed</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask1Partial" 
                  onchange="toggleCheckbox(1, 'partial'); saveToCookies()"> 
-          <span class="checkbox-text">Partially Done</span>
+          <span class="checkbox-text">🔄 Partially Done</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask1NotCompleted" 
                  onchange="toggleCheckbox(1, 'notCompleted'); saveToCookies()"> 
-          <span class="checkbox-text">Not Completed</span>
+          <span class="checkbox-text">❌ Not Done</span>
         </label>
       </div>
       <textarea id="yesterdayTask1PartialReason" 
@@ -86,7 +85,7 @@
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
       <textarea id="yesterdayTask1Reason" 
-                placeholder="Reason for not completing..." 
+                placeholder="Reason for not completing (optional)..." 
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
     </div>
@@ -100,17 +99,17 @@
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask2Completed" 
                  onchange="toggleCheckbox(2, 'completed'); saveToCookies()"> 
-          <span class="checkbox-text">Completed</span>
+          <span class="checkbox-text">✅ Completed</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask2Partial" 
                  onchange="toggleCheckbox(2, 'partial'); saveToCookies()"> 
-          <span class="checkbox-text">Partially Done</span>
+          <span class="checkbox-text">🔄 Partially Done</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask2NotCompleted" 
                  onchange="toggleCheckbox(2, 'notCompleted'); saveToCookies()"> 
-          <span class="checkbox-text">Not Completed</span>
+          <span class="checkbox-text">❌ Not Done</span>
         </label>
       </div>
       <textarea id="yesterdayTask2PartialReason" 
@@ -118,7 +117,7 @@
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
       <textarea id="yesterdayTask2Reason" 
-                placeholder="Reason for not completing..." 
+                placeholder="Reason for not completing (optional)..." 
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
     </div>
@@ -132,17 +131,17 @@
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask3Completed" 
                  onchange="toggleCheckbox(3, 'completed'); saveToCookies()"> 
-          <span class="checkbox-text">Completed</span>
+          <span class="checkbox-text">✅ Completed</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask3Partial" 
                  onchange="toggleCheckbox(3, 'partial'); saveToCookies()"> 
-          <span class="checkbox-text">Partially Done</span>
+          <span class="checkbox-text">🔄 Partially Done</span>
         </label>
         <label class="checkbox-label">
           <input type="checkbox" id="yesterdayTask3NotCompleted" 
                  onchange="toggleCheckbox(3, 'notCompleted'); saveToCookies()"> 
-          <span class="checkbox-text">Not Completed</span>
+          <span class="checkbox-text">❌ Not Done</span>
         </label>
       </div>
       <textarea id="yesterdayTask3PartialReason" 
@@ -150,7 +149,7 @@
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
       <textarea id="yesterdayTask3Reason" 
-                placeholder="Reason for not completing..." 
+                placeholder="Reason for not completing (optional)..." 
                 class="reason-textarea hidden" 
                 oninput="saveToCookies()"></textarea>
     </div>
