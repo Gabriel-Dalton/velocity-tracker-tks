@@ -57,97 +57,103 @@
   <div class="container mx-auto max-w-lg bg-white rounded-lg shadow-lg p-8">
     <h2 id="checkInTitle" class="text-2xl font-bold mb-4 text-center">Daily Check-In</h2>
 <form id="checkinForm" class="space-y-4">
-  <div class="mb-4">
-    <label class="block font-semibold">Task 1</label>
-    <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." 
-           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" 
-           oninput="saveToCookies()">
+  <div class="task-review-container">
+    <!-- Task 1 -->
+    <div class="task-container">
+      <label class="task-title">Task 1</label>
+      <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." 
+             class="task-input" 
+             oninput="saveToCookies()">
+      <div class="checkbox-container">
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask1Completed" 
+                 onchange="toggleCheckbox(1, 'completed'); saveToCookies()"> 
+          <span class="checkbox-text">Completed</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask1Partial" 
+                 onchange="toggleCheckbox(1, 'partial'); saveToCookies()"> 
+          <span class="checkbox-text">Partially Done</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask1NotCompleted" 
+                 onchange="toggleCheckbox(1, 'notCompleted'); saveToCookies()"> 
+          <span class="checkbox-text">Not Completed</span>
+        </label>
+      </div>
+      <textarea id="yesterdayTask1PartialReason" 
+                placeholder="Explain partial completion (optional)..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+      <textarea id="yesterdayTask1Reason" 
+                placeholder="Reason for not completing..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+    </div>
+
+    <div class="task-container">
+      <label class="task-title">Task 2</label>
+      <input type="text" id="yesterdayTask2" placeholder="Task 2 title..." 
+             class="task-input" 
+             oninput="saveToCookies()">
+      <div class="checkbox-container">
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask2Completed" 
+                 onchange="toggleCheckbox(2, 'completed'); saveToCookies()"> 
+          <span class="checkbox-text">Completed</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask2Partial" 
+                 onchange="toggleCheckbox(2, 'partial'); saveToCookies()"> 
+          <span class="checkbox-text">Partially Done</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask2NotCompleted" 
+                 onchange="toggleCheckbox(2, 'notCompleted'); saveToCookies()"> 
+          <span class="checkbox-text">Not Completed</span>
+        </label>
+      </div>
+      <textarea id="yesterdayTask2PartialReason" 
+                placeholder="Explain partial completion (optional)..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+      <textarea id="yesterdayTask2Reason" 
+                placeholder="Reason for not completing..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+    </div>
   
-    <label>
-      <input type="checkbox" id="yesterdayTask1Completed" 
-             onchange="toggleCheckbox(1, 'completed'); saveToCookies()"> 
-      ✅ Completed
-    </label>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask1Partial" 
-             onchange="toggleCheckbox(1, 'partial'); saveToCookies()"> 
-      🔄 Partially Done
-    </label>
-    <textarea id="yesterdayTask1PartialReason" placeholder="Explain partial completion (optional)..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask1NotCompleted" 
-             onchange="toggleCheckbox(1, 'notCompleted'); saveToCookies()"> 
-      ❌ Not Completed
-    </label>
-    <textarea id="yesterdayTask1Reason" placeholder="Reason for not completing..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
-  </div>
-  
-  <div class="mb-4">
-    <label class="block font-semibold">Task 2</label>
-    <input type="text" id="yesterdayTask2" placeholder="Task 2 title..." 
-           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" 
-           oninput="saveToCookies()">
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask2Completed" 
-             onchange="toggleCheckbox(2, 'completed'); saveToCookies()"> 
-      ✅ Completed
-    </label>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask2Partial" 
-             onchange="toggleCheckbox(2, 'partial'); saveToCookies()"> 
-      🔄 Partially Done
-    </label>
-    <textarea id="yesterdayTask2PartialReason" placeholder="Explain partial completion (optional)..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask2NotCompleted" 
-             onchange="toggleCheckbox(2, 'notCompleted'); saveToCookies()"> 
-      ❌ Not Completed
-    </label>
-    <textarea id="yesterdayTask2Reason" placeholder="Reason for not completing..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
-  </div>
-  
-  <div class="mb-4">
-    <label class="block font-semibold">Task 3</label>
-    <input type="text" id="yesterdayTask3" placeholder="Task 3 title..." 
-           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-2" 
-           oninput="saveToCookies()">
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask3Completed" 
-             onchange="toggleCheckbox(3, 'completed'); saveToCookies()"> 
-      ✅ Completed
-    </label>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask3Partial" 
-             onchange="toggleCheckbox(3, 'partial'); saveToCookies()"> 
-      🔄 Partially Done
-    </label>
-    <textarea id="yesterdayTask3PartialReason" placeholder="Explain partial completion (optional)..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
-  
-    <label>
-      <input type="checkbox" id="yesterdayTask3NotCompleted" 
-             onchange="toggleCheckbox(3, 'notCompleted'); saveToCookies()"> 
-      ❌ Not Completed
-    </label>
-    <textarea id="yesterdayTask3Reason" placeholder="Reason for not completing..." 
-              class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-2 hidden" 
-              oninput="saveToCookies()"></textarea>
+    <div class="task-container">
+      <label class="task-title">Task 3</label>
+      <input type="text" id="yesterdayTask3" placeholder="Task 3 title..." 
+             class="task-input" 
+             oninput="saveToCookies()">
+      <div class="checkbox-container">
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask3Completed" 
+                 onchange="toggleCheckbox(3, 'completed'); saveToCookies()"> 
+          <span class="checkbox-text">Completed</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask3Partial" 
+                 onchange="toggleCheckbox(3, 'partial'); saveToCookies()"> 
+          <span class="checkbox-text">Partially Done</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="yesterdayTask3NotCompleted" 
+                 onchange="toggleCheckbox(3, 'notCompleted'); saveToCookies()"> 
+          <span class="checkbox-text">Not Completed</span>
+        </label>
+      </div>
+      <textarea id="yesterdayTask3PartialReason" 
+                placeholder="Explain partial completion (optional)..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+      <textarea id="yesterdayTask3Reason" 
+                placeholder="Reason for not completing..." 
+                class="reason-textarea hidden" 
+                oninput="saveToCookies()"></textarea>
+    </div>
   </div>
   <div>
         <label class="block font-semibold mb-2">Top 3 for Tomorrow</label>
@@ -253,6 +259,57 @@
   </footer>
   
 </body>
+<style>
+  .task-review-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .task-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .task-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .task-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-text {
+    margin-left: 0.5rem;
+  }
+  
+  .reason-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  </style>
 <script>
   function setDayInTitle() {
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
@@ -297,14 +354,12 @@ function toggleCheckbox(taskNumber, type) {
   const reasonTextarea = document.getElementById(`yesterdayTask${taskNumber}Reason`);
   const partialReasonTextarea = document.getElementById(`yesterdayTask${taskNumber}PartialReason`);
 
-  // Reset all checkboxes and hide all text areas
   completedCheckbox.checked = false;
   partialCheckbox.checked = false;
   notCompletedCheckbox.checked = false;
   reasonTextarea.classList.add("hidden");
   partialReasonTextarea.classList.add("hidden");
 
-  // Show the corresponding text area based on the selected checkbox
   if (type === "completed") {
     completedCheckbox.checked = true;
   } else if (type === "partial") {
@@ -315,9 +370,9 @@ function toggleCheckbox(taskNumber, type) {
     reasonTextarea.classList.remove("hidden");
   }
 
-  // Save the state to cookies
   saveToCookies();
 }
+
 
 function saveToCookies() {
   const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea");
