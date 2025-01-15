@@ -3,64 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Slack to Dropbox Paper Formatter</title>
+  <title>Emoji Formatter</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow-lg p-6">
-    <h1 class="text-2xl font-bold mb-4 text-center">Slack to Dropbox Paper Formatter</h1>
-    <textarea id="slackInput" placeholder="Paste your Slack markdown here..." 
-              class="w-full h-48 p-3 border rounded-lg focus:outline-none focus:ring mb-4"></textarea>
-    <button id="formatButton" 
-            class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring">
-      Format and Copy
+  <div class="container max-w-lg bg-white rounded-lg shadow-lg p-8">
+    <h2 class="text-2xl font-bold mb-4 text-center">Emoji Formatter</h2>
+    <textarea 
+      id="inputText" 
+      placeholder="Paste your text here..." 
+      class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mb-4" 
+      rows="6"
+    ></textarea>
+    <button 
+      onclick="formatText()" 
+      class="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring"
+    >
+      Format Text
     </button>
-    <div id="notification" class="hidden mt-4 p-3 text-center bg-green-500 text-white rounded-lg">Formatted text copied to clipboard!</div>
+    <textarea 
+      id="outputText" 
+      placeholder="Formatted text will appear here..." 
+      class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring mt-4" 
+      rows="6" 
+      readonly
+    ></textarea>
   </div>
+
   <script>
-    const emojiMap = {
-      ":white_check_mark:": "✅",
-      ":x:": "❌",
-      ":arrows_counterclockwise:": "🔄",
-      ":heart:": "❤️",
-      ":star:": "⭐",
-      ":clap:": "👏"
-    };
+    function formatText() {
+      const inputText = document.getElementById("inputText").value;
 
-    function formatSlackToDropbox(text) {
-      const replacedText = text.replace(/:\w+:/g, match => emojiMap[match] || match);
+      const formattedText = inputText
+        .replace(/:white_check_mark:/g, "✅") 
+        .replace(/:arrows_counterclockwise:/g, "🔄") 
+        .replace(/:x:/g, "❌"); 
 
-      const formattedText = replacedText
-        // Bold section headings
-        .replace(/^(Yesterday's Top 3 Review|Top 3 for Tomorrow|Wins|Challenges|Self-Reflections|Day Score|Habit Tracker|Gratitude):/gm, "**$1:**")
-        // Bold task names and descriptions
-        .replace(/• Task (\d+): (.*?)( - .*?)?/g, "• **Task $1:** $2$3")
-        // Remove bullet points from Day Score and Habit Tracker
-        .replace(/^\• (Day Score:|Habit Tracker:)/gm, "$1")
-        // Number Wins and Challenges
-        .replace(/^Wins:\n(?:- (.*)\n)+/gm, (match) => {
-          const items = match.trim().split("\n").map((line, index) => `${index + 1}. ${line.slice(2)}`);
-          return `**Wins:**\n${items.join("\n")}`;
-        })
-        .replace(/^Challenges:\n(?:- (.*)\n)+/gm, (match) => {
-          const items = match.trim().split("\n").map((line, index) => `${index + 1}. ${line.slice(2)}`);
-          return `**Challenges:**\n${items.join("\n")}`;
-        });
-
-      return formattedText;
+      document.getElementById("outputText").value = formattedText;
     }
-
-    document.getElementById("formatButton").addEventListener("click", () => {
-      const input = document.getElementById("slackInput").value;
-      const formattedText = formatSlackToDropbox(input);
-
-      navigator.clipboard.writeText(formattedText).then(() => {
-        const notification = document.getElementById("notification");
-        notification.textContent = "Formatted text copied to clipboard!";
-        notification.classList.remove("hidden");
-        setTimeout(() => notification.classList.add("hidden"), 2000);
-      }).catch(console.error);
-    });
   </script>
 </body>
 </html>
