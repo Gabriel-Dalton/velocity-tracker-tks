@@ -412,6 +412,16 @@ function loadFromCookies() {
 
 loadFromCookies();
 
+function togglePodcastSection() {
+  const podcastSection = document.getElementById("podcastSection");
+  const podcastCheckbox = document.getElementById("podcast");
+  if (podcastCheckbox.checked) {
+    podcastSection.classList.remove("hidden");
+  } else {
+    podcastSection.classList.add("hidden");
+  }
+}
+
 
 function formatList(items, formatType) {
   return items.map((item, index) => formatType === "numbered" ? `${index + 1}. ${item}` : `- ${item}`).join("\n");
