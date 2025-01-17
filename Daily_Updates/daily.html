@@ -203,18 +203,17 @@
       </div>
 
       <div>
-        <label class="block font-semibold mb-2">Rate Your Day</label>
         <input 
-          type="range" 
-          id="dayScore" 
-          min="1" 
-          max="10" 
-          step="0.5" 
-          value="10" 
-          class="w-full" 
-          oninput="updateDayScore(); saveToCookies()"
-        >
-        <p class="text-center mt-2" id="dayScoreValue">5</p>
+        type="range" 
+        id="dayScore" 
+        min="1" 
+        max="10" 
+        step="0.5" 
+        value="5" 
+        class="w-full" 
+        oninput="updateDayScore(); saveToCookies()"
+      />
+      <p class="text-center mt-2" id="dayScoreValue">5</p>    
       </div>
       
 
@@ -320,7 +319,7 @@
   }
   </style>
 <script>
-  function setDayInTitle() {
+function setDayInTitle() {
   const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
   const today = new Date();
   document.getElementById("checkInTitle").textContent = `Daily Check-In - ${today.toLocaleDateString("en-US", options)}`;
@@ -382,14 +381,20 @@ function toggleCheckbox(taskNumber, type) {
   saveToCookies();
 }
 
+function updateDayScore() {
+  const slider = document.getElementById("dayScore");
+  const scoreDisplay = document.getElementById("dayScoreValue");
+  scoreDisplay.textContent = slider.value; 
+}
 
 function saveToCookies() {
   const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea");
   fields.forEach(field => {
+    const key = field.id || field.name; // Use name if ID is not available
     if (field.type === "checkbox") {
-      document.cookie = `${field.id}=${field.checked}; path=/;`;
+      document.cookie = `${key}=${field.checked}; path=/;`;
     } else {
-      document.cookie = `${field.id}=${encodeURIComponent(field.value)}; path=/;`;
+      document.cookie = `${key}=${encodeURIComponent(field.value)}; path=/;`;
     }
   });
 }
@@ -401,11 +406,11 @@ function loadFromCookies() {
     return acc;
   }, {});
 
-  for (let id in cookies) {
-    const field = document.getElementById(id);
+  for (let key in cookies) {
+    const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
     if (field) {
-      if (field.type === "checkbox") field.checked = cookies[id] === "true";
-      else field.value = cookies[id];
+      if (field.type === "checkbox") field.checked = cookies[key] === "true";
+      else field.value = cookies[key];
     }
   }
 }
@@ -422,18 +427,6 @@ function togglePodcastSection() {
   }
 }
 
-
-function formatList(items, formatType) {
-  return items.map((item, index) => formatType === "numbered" ? `${index + 1}. ${item}` : `- ${item}`).join("\n");
-}
-
-function showNotification(message = "Copied to clipboard!") {
-  const notification = document.getElementById("copyNotification");
-  notification.textContent = message;
-  notification.classList.remove("hidden");
-  setTimeout(() => notification.classList.add("hidden"), 2000);
-}
-
 function generateSlackMarkdown() {
   const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
@@ -445,7 +438,7 @@ function generateSlackMarkdown() {
     const reason = document.getElementById(`yesterdayTask${taskNumber}Reason`).value.trim();
     const partialReason = document.getElementById(`yesterdayTask${taskNumber}PartialReason`).value.trim();
 
-    if (!taskTitle) return "";
+    if (!taskTitle) return ""; // Skip empty tasks
 
     let status = "";
     if (isCompleted) {
@@ -461,29 +454,32 @@ function generateSlackMarkdown() {
 
   const yesterdayReview = `*Yesterday's Top 3 Review:*\n${[1, 2, 3]
     .map(taskNumber => formatTaskReview(taskNumber))
+    .filter(Boolean) // Filter out empty results
+    .join("\n")}`;
+
+  const tomorrowTasks = `*Top 3 for Tomorrow:*\n${[1, 2, 3]
+    .map(i => {
+      const task = document.getElementById(`tomorrowTask${i}`).value.trim();
+      const desc = document.getElementById(`tomorrowTask${i}Description`).value.trim();
+      return task ? `• Task ${i}: *${task}*${desc ? ` - ${desc}` : ""}` : "";
+    })
     .filter(Boolean)
     .join("\n")}`;
 
-  const tomorrowTask1 = document.getElementById("tomorrowTask1").value.trim();
-  const tomorrowTask1Description = document.getElementById("tomorrowTask1Description").value.trim();
-
-  const tomorrowTask2 = document.getElementById("tomorrowTask2").value.trim();
-  const tomorrowTask2Description = document.getElementById("tomorrowTask2Description").value.trim();
-
-  const tomorrowTask3 = document.getElementById("tomorrowTask3").value.trim();
-  const tomorrowTask3Description = document.getElementById("tomorrowTask3Description").value.trim();
-
-  const tomorrowTasks = `*Top 3 for Tomorrow:*\n${[
-    tomorrowTask1 ? `• Task 1: *${tomorrowTask1}*${tomorrowTask1Description ? ` - ${tomorrowTask1Description}` : ""}` : "",
-    tomorrowTask2 ? `• Task 2: *${tomorrowTask2}*${tomorrowTask2Description ? ` - ${tomorrowTask2Description}` : ""}` : "",
-    tomorrowTask3 ? `• Task 3: *${tomorrowTask3}*${tomorrowTask3Description ? ` - ${tomorrowTask3Description}` : ""}` : ""
-  ]
+  const wins = Array.from(document.getElementsByName("wins"))
+    .map(win => `• ${win.value.trim()}`)
     .filter(Boolean)
-    .join("\n")}`;
+    .join("\n");
 
-  const wins = Array.from(document.getElementsByName("wins")).map(win => `• ${win.value.trim()}`).join("\n");
-  const challenges = Array.from(document.getElementsByName("challenges")).map(challenge => `• ${challenge.value.trim()}`).join("\n");
-  const selfReflections = Array.from(document.getElementsByName("selfReflection")).map(reflection => `• ${reflection.value.trim()}`).join("\n");
+  const challenges = Array.from(document.getElementsByName("challenges"))
+    .map(challenge => `• ${challenge.value.trim()}`)
+    .filter(Boolean)
+    .join("\n");
+
+  const selfReflections = Array.from(document.getElementsByName("selfReflection"))
+    .map(reflection => `• ${reflection.value.trim()}`)
+    .filter(Boolean)
+    .join("\n");
 
   const dayScore = document.getElementById("dayScore").value;
 
@@ -496,23 +492,42 @@ function generateSlackMarkdown() {
     { id: "podcast", label: "Podcast" },
     { id: "duolingo", label: "Duolingo" }
   ];
+
   const habitStatus = habits
     .map(habit => `• ${habit.label}: ${document.getElementById(habit.id).checked ? "✅" : "❌"}`)
     .join("\n");
 
+  let podcastDetails = "";
   const podcastChecked = document.getElementById("podcast").checked;
-  const podcastDetails = podcastChecked
-    ? `\n• Podcast Title: ${document.getElementById("podcastTitle").value.trim()}\n• Podcast Notes: ${document.getElementById("podcastNotes").value.trim()}`
-    : "";
+  if (podcastChecked) {
+    const podcastTitle = document.getElementById("podcastTitle").value.trim();
+    const podcastNotes = document.getElementById("podcastNotes").value.trim();
+    if (podcastTitle || podcastNotes) {
+      podcastDetails = `\n*Podcast Details:*\n`;
+      if (podcastTitle) podcastDetails += `Title: ${podcastTitle}\n`;
+      if (podcastNotes) podcastDetails += `Notes: ${podcastNotes}\n`;
+    }
+  }
 
-  const gratitude = document.getElementById("gratitude").value.trim().split("\n").map(item => `• ${item}`).join("\n");
+  const gratitude = document.getElementById("gratitude").value
+    .trim()
+    .split("\n")
+    .map(item => `• ${item}`)
+    .filter(Boolean)
+    .join("\n");
 
-  const slackMarkdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n*Wins:*\n${wins}\n\n*Challenges:*\n${challenges}\n\n*Self-Reflections:*\n${selfReflections}\n\n*Day Score:*\n• ${dayScore}/10\n\n*Habit Tracker:*\n${habitStatus}${podcastDetails}\n\n*Gratitude:*\n${gratitude}`;
+  const slackMarkdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n*Wins:*\n${wins || "No wins added."}\n\n*Challenges:*\n${challenges || "No challenges added."}\n\n*Self-Reflections:*\n${selfReflections || "No self-reflections added."}\n\n*Day Score:*\n• ${dayScore}/10\n\n*Habit Tracker:*\n${habitStatus}${podcastDetails}\n\n*Gratitude:*\n${gratitude}`;
 
   navigator.clipboard.writeText(slackMarkdown).then(() => {
     showNotification("Slack Markdown copied!");
   }).catch(console.error);
 }
 
+function showNotification(message = "Copied to clipboard!") {
+  const notification = document.getElementById("copyNotification");
+  notification.textContent = message;
+  notification.classList.remove("hidden");
+  setTimeout(() => notification.classList.add("hidden"), 2000);
+}
 </script>
 </html>
