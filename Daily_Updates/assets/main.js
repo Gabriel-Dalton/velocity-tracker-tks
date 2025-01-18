@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const textarea = document.createElement("textarea");
       textarea.className = "w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring";
       textarea.placeholder = `Add ${sectionType.charAt(0).toUpperCase() + sectionType.slice(1)}...`;
-      textarea.value = value; // Restore saved value if provided
+      textarea.value = value; 
       textarea.addEventListener("input", saveToLocalStorage);
   
       const deleteButton = document.createElement("button");
