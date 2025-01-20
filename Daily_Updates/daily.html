@@ -390,7 +390,7 @@ function updateDayScore() {
 function saveToCookies() {
   const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea");
   fields.forEach(field => {
-    const key = field.id || field.name; // Use name if ID is not available
+    const key = field.id || field.name;
     if (field.type === "checkbox") {
       document.cookie = `${key}=${field.checked}; path=/;`;
     } else {
@@ -427,6 +427,7 @@ function togglePodcastSection() {
   }
 }
 
+// Function to generate Slack Markdown with dynamic Wins, Challenges, and Self-Reflections
 function generateSlackMarkdown() {
   const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
@@ -449,7 +450,7 @@ function generateSlackMarkdown() {
       status = `❌ Not Completed${reason ? ` - Reason: ${reason}` : ""}`;
     }
 
-    return `• Task ${taskNumber}: *${taskTitle}* (${status})`;
+    return `• Task ${taskNumber}: ${taskTitle} (${status})`;
   }
 
   const yesterdayReview = `*Yesterday's Top 3 Review:*\n${[1, 2, 3]
@@ -461,22 +462,22 @@ function generateSlackMarkdown() {
     .map(i => {
       const task = document.getElementById(`tomorrowTask${i}`).value.trim();
       const desc = document.getElementById(`tomorrowTask${i}Description`).value.trim();
-      return task ? `• Task ${i}: *${task}*${desc ? ` - ${desc}` : ""}` : "";
+      return task ? `• Task ${i}: ${task}${desc ? ` - ${desc}` : ""}` : "";
     })
     .filter(Boolean)
     .join("\n")}`;
 
-  const wins = Array.from(document.getElementsByName("wins"))
+  const wins = Array.from(document.querySelectorAll('#winsContainer textarea')) // Updated to target the textarea elements inside the winsContainer
     .map(win => `• ${win.value.trim()}`)
     .filter(Boolean)
     .join("\n");
 
-  const challenges = Array.from(document.getElementsByName("challenges"))
+  const challenges = Array.from(document.querySelectorAll('#challengesContainer textarea')) // Updated to target the textarea elements inside the challengesContainer
     .map(challenge => `• ${challenge.value.trim()}`)
     .filter(Boolean)
     .join("\n");
 
-  const selfReflections = Array.from(document.getElementsByName("selfReflection"))
+  const selfReflections = Array.from(document.querySelectorAll('#selfReflectionsContainer textarea')) // Updated to target the textarea elements inside the selfReflectionsContainer
     .map(reflection => `• ${reflection.value.trim()}`)
     .filter(Boolean)
     .join("\n");
@@ -504,8 +505,8 @@ function generateSlackMarkdown() {
     const podcastNotes = document.getElementById("podcastNotes").value.trim();
     if (podcastTitle || podcastNotes) {
       podcastDetails = `\n*Podcast Details:*\n`;
-      if (podcastTitle) podcastDetails += `Title: ${podcastTitle}\n`;
-      if (podcastNotes) podcastDetails += `Notes: ${podcastNotes}\n`;
+      if (podcastTitle) podcastDetails += `• *Title:* ${podcastTitle}\n`;
+      if (podcastNotes) podcastDetails += `• *Notes:* ${podcastNotes}\n`;
     }
   }
 
@@ -516,34 +517,13 @@ function generateSlackMarkdown() {
     .filter(Boolean)
     .join("\n");
 
-    const slackMarkdown = `${dayOfWeek}
-
-**${yesterdayReview}**
-
-**${tomorrowTasks}**
-
-**Wins:**
-${wins || "No wins added."}
-
-**Challenges:**
-${challenges || "No challenges added."}
-
-**Self-Reflections:**
-${selfReflections || "No self-reflections added."}
-
-**Day Score:**
-• ${dayScore}/10
-
-**Habit Tracker:**
-${habitStatus}${podcastDetails}
-
-**Gratitude:**
-${gratitude}`;
+  const slackMarkdown = `*${dayOfWeek}*\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n*Wins:*\n${wins || "No wins added."}\n\n*Challenges:*\n${challenges || "No challenges added."}\n\n*Self-Reflections:*\n${selfReflections || "No self-reflections added."}\n\n*Day Score:*\n• ${dayScore}/10\n\n*Habit Tracker:*\n${habitStatus}${podcastDetails}\n\n*Gratitude:*\n${gratitude || "No gratitude added."}`;
 
   navigator.clipboard.writeText(slackMarkdown).then(() => {
     showNotification("Slack Markdown copied!");
   }).catch(console.error);
 }
+
 
 function showNotification(message = "Copied to clipboard!") {
   const notification = document.getElementById("copyNotification");
@@ -552,4 +532,5 @@ function showNotification(message = "Copied to clipboard!") {
   setTimeout(() => notification.classList.add("hidden"), 2000);
 }
 </script>
+
 </html>
