@@ -427,7 +427,6 @@ function togglePodcastSection() {
   }
 }
 
-// Function to generate Slack Markdown with dynamic Wins, Challenges, and Self-Reflections
 function generateSlackMarkdown() {
   const dayOfWeek = document.getElementById("checkInTitle").textContent;
 
@@ -453,12 +452,12 @@ function generateSlackMarkdown() {
     return `• Task ${taskNumber}: ${taskTitle} (${status})`;
   }
 
-  const yesterdayReview = `*Yesterday's Top 3 Review:*\n${[1, 2, 3]
+  const yesterdayReview = `Yesterday's Top 3 Review:\n${[1, 2, 3]
     .map(taskNumber => formatTaskReview(taskNumber))
     .filter(Boolean)
     .join("\n")}`;
 
-  const tomorrowTasks = `*Top 3 for Tomorrow:*\n${[1, 2, 3]
+  const tomorrowTasks = `Top 3 for Tomorrow:\n${[1, 2, 3]
     .map(i => {
       const task = document.getElementById(`tomorrowTask${i}`).value.trim();
       const desc = document.getElementById(`tomorrowTask${i}Description`).value.trim();
@@ -467,17 +466,17 @@ function generateSlackMarkdown() {
     .filter(Boolean)
     .join("\n")}`;
 
-  const wins = Array.from(document.querySelectorAll('#winsContainer textarea')) // Updated to target the textarea elements inside the winsContainer
+  const wins = Array.from(document.querySelectorAll('#winsContainer textarea'))
     .map(win => `• ${win.value.trim()}`)
     .filter(Boolean)
     .join("\n");
 
-  const challenges = Array.from(document.querySelectorAll('#challengesContainer textarea')) // Updated to target the textarea elements inside the challengesContainer
+  const challenges = Array.from(document.querySelectorAll('#challengesContainer textarea'))
     .map(challenge => `• ${challenge.value.trim()}`)
     .filter(Boolean)
     .join("\n");
 
-  const selfReflections = Array.from(document.querySelectorAll('#selfReflectionsContainer textarea')) // Updated to target the textarea elements inside the selfReflectionsContainer
+  const selfReflections = Array.from(document.querySelectorAll('#selfReflectionsContainer textarea'))
     .map(reflection => `• ${reflection.value.trim()}`)
     .filter(Boolean)
     .join("\n");
@@ -504,9 +503,9 @@ function generateSlackMarkdown() {
     const podcastTitle = document.getElementById("podcastTitle").value.trim();
     const podcastNotes = document.getElementById("podcastNotes").value.trim();
     if (podcastTitle || podcastNotes) {
-      podcastDetails = `\n*Podcast Details:*\n`;
-      if (podcastTitle) podcastDetails += `• *Title:* ${podcastTitle}\n`;
-      if (podcastNotes) podcastDetails += `• *Notes:* ${podcastNotes}\n`;
+      podcastDetails = `Podcast Details:\n`;
+      if (podcastTitle) podcastDetails += `• Title: ${podcastTitle}\n`;
+      if (podcastNotes) podcastDetails += `• Notes: ${podcastNotes}\n`;
     }
   }
 
@@ -517,13 +516,12 @@ function generateSlackMarkdown() {
     .filter(Boolean)
     .join("\n");
 
-  const slackMarkdown = `*${dayOfWeek}*\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n*Wins:*\n${wins || "No wins added."}\n\n*Challenges:*\n${challenges || "No challenges added."}\n\n*Self-Reflections:*\n${selfReflections || "No self-reflections added."}\n\n*Day Score:*\n• ${dayScore}/10\n\n*Habit Tracker:*\n${habitStatus}${podcastDetails}\n\n*Gratitude:*\n${gratitude || "No gratitude added."}`;
+  const slackMarkdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\nWins:\n${wins || "No wins added."}\n\nChallenges:\n${challenges || "No challenges added."}\n\nSelf-Reflections:\n${selfReflections || "No self-reflections added."}\n\nDay Score:\n• ${dayScore}/10\n\nHabit Tracker:\n${habitStatus}${podcastDetails}\n\nGratitude:\n${gratitude || "No gratitude added."}`;
 
   navigator.clipboard.writeText(slackMarkdown).then(() => {
     showNotification("Slack Markdown copied!");
   }).catch(console.error);
 }
-
 
 function showNotification(message = "Copied to clipboard!") {
   const notification = document.getElementById("copyNotification");
@@ -531,6 +529,7 @@ function showNotification(message = "Copied to clipboard!") {
   notification.classList.remove("hidden");
   setTimeout(() => notification.classList.add("hidden"), 2000);
 }
+
 </script>
 
 </html>
