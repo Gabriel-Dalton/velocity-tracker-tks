@@ -516,7 +516,29 @@ function generateSlackMarkdown() {
     .filter(Boolean)
     .join("\n");
 
-  const slackMarkdown = `${dayOfWeek}\n\n${yesterdayReview}\n\n${tomorrowTasks}\n\n*Wins:*\n${wins || "No wins added."}\n\n*Challenges:*\n${challenges || "No challenges added."}\n\n*Self-Reflections:*\n${selfReflections || "No self-reflections added."}\n\n*Day Score:*\n• ${dayScore}/10\n\n*Habit Tracker:*\n${habitStatus}${podcastDetails}\n\n*Gratitude:*\n${gratitude}`;
+    const slackMarkdown = `${dayOfWeek}
+
+**${yesterdayReview}**
+
+**${tomorrowTasks}**
+
+**Wins:**
+${wins || "No wins added."}
+
+**Challenges:**
+${challenges || "No challenges added."}
+
+**Self-Reflections:**
+${selfReflections || "No self-reflections added."}
+
+**Day Score:**
+• ${dayScore}/10
+
+**Habit Tracker:**
+${habitStatus}${podcastDetails}
+
+**Gratitude:**
+${gratitude}`;
 
   navigator.clipboard.writeText(slackMarkdown).then(() => {
     showNotification("Slack Markdown copied!");
