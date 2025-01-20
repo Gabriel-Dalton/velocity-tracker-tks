@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Check-In with Voice Recognition</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <div class="container mx-auto max-w-lg bg-white rounded-lg shadow-lg p-8">
+    <h2 id="checkInTitle" class="text-2xl font-bold mb-4 text-center">Daily Check-In</h2>
+    <form id="checkinForm" class="space-y-4">
+      <!-- Task Section -->
+      <div class="task-review-container">
+        <div class="task-container">
+          <label class="task-title">Task 1</label>
+          <div class="flex items-center">
+            <input type="text" id="yesterdayTask1" placeholder="Task 1 title..." class="task-input" oninput="saveToCookies()">
+            <button type="button" onclick="startRecognition('yesterdayTask1')" class="ml-2 text-blue-500">🎤</button>
+          </div>
+          <div class="checkbox-container">
+            <label class="checkbox-label">
+              <input type="checkbox" id="yesterdayTask1Completed" onchange="toggleCheckbox(1, 'completed'); saveToCookies()"> 
+              <span class="checkbox-text">✅ Completed</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="yesterdayTask1Partial" onchange="toggleCheckbox(1, 'partial'); saveToCookies()"> 
+              <span class="checkbox-text">🔄 Partially Done</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="yesterdayTask1NotCompleted" onchange="toggleCheckbox(1, 'notCompleted'); saveToCookies()"> 
+              <span class="checkbox-text">❌ Not Done</span>
+            </label>
+          </div>
+          <textarea id="yesterdayTask1PartialReason" placeholder="Explain partial completion (optional)..." class="reason-textarea hidden" oninput="saveToCookies()"></textarea>
+          <textarea id="yesterdayTask1Reason" placeholder="Reason for not completing (optional)..." class="reason-textarea hidden" oninput="saveToCookies()"></textarea>
+        </div>
+      </div>
+
+      <!-- Additional Sections (Dynamic Fields, Day Score, Habits, Gratitude) -->
+      <div>
+        <label class="block font-semibold mb-2">Gratitude</label>
+        <div class="flex items-center">
+          <textarea id="gratitude" placeholder="List things you're grateful for..." class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring" oninput="saveToCookies()"></textarea>
+          <button type="button" onclick="startRecognition('gratitude')" class="ml-2 text-blue-500">🎤</button>
+        </div>
+      </div>
+      
+      <button type="button" onclick="generateSlackMarkdown()" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring">
+        Copy Markdown
+      </button>
+    </form>
+  </div>
+  
+  <script>
+    // Set the title to include today's date
+    function setDayInTitle() {
+      const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+      const today = new Date();
+      document.getElementById("checkInTitle").textContent = `Daily Check-In - ${today.toLocaleDateString("en-US", options)}`;
+    }
+    setDayInTitle();
+
+    // Voice Recognition for Input Fields
+    function startRecognition(fieldId) {
+      if (!('webkitSpeechRecognition' in window)) {
+        alert('Your browser does not support voice recognition. Please use a modern browser like Chrome.');
+        return;
+      }
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US'; // Set the language
+      recognition.interimResults = false; // Final results only
+      recognition.maxAlternatives = 1; // Single result
+
+      recognition.onresult = function (event) {
+        const transcript = event.results[0][0].transcript;
+        const field = document.getElementById(fieldId);
+        if (field.tagName === 'INPUT') {
+          field.value = transcript;
+        } else if (field.tagName === 'TEXTAREA') {
+          field.value += transcript;
+        }
+        saveToCookies();
+      };
+
+      recognition.onerror = function () {
+        alert('Voice recognition failed. Please try again.');
+      };
+
+      recognition.start();
+    }
+
+    // Save to Cookies
+    function saveToCookies() {
+      const fields = document.querySelectorAll("#checkinForm input, #checkinForm textarea");
+      fields.forEach(field => {
+        const key = field.id || field.name; 
+        if (field.type === "checkbox") {
+          document.cookie = `${key}=${field.checked}; path=/;`;
+        } else {
+          document.cookie = `${key}=${encodeURIComponent(field.value)}; path=/;`;
+        }
+      });
+    }
+
+    // Load from Cookies
+    function loadFromCookies() {
+      const cookies = document.cookie.split("; ").reduce((acc, cookie) => {
+        const [name, value] = cookie.split("=");
+        acc[name] = decodeURIComponent(value);
+        return acc;
+      }, {});
+
+      for (let key in cookies) {
+        const field = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+        if (field) {
+          if (field.type === "checkbox") field.checked = cookies[key] === "true";
+          else field.value = cookies[key];
+        }
+      }
+    }
+
+    loadFromCookies();
+
+    // Generate Slack Markdown
+    function generateSlackMarkdown() {
+      const gratitude = document.getElementById("gratitude").value.trim().split("\n").map(item => `• ${item}`).join("\n");
+      const markdown = `*Daily Check-In*\n\n*Gratitude:*\n${gratitude || "No gratitude items added."}`;
+      navigator.clipboard.writeText(markdown).then(() => alert("Copied to clipboard!"));
+    }
+  </script>
+</body>
+
+<style>
+  .task-review-container {
+    margin-bottom: 1.5rem;
+  }
+  .task-input, .reason-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .checkbox-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  button {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: transform 0.2s ease;
+  }
+  button:hover {
+    transform: scale(1.1);
+  }
+</style>
+</html>

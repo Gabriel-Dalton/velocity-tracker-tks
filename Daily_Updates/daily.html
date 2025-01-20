@@ -438,7 +438,7 @@ function generateSlackMarkdown() {
     const reason = document.getElementById(`yesterdayTask${taskNumber}Reason`).value.trim();
     const partialReason = document.getElementById(`yesterdayTask${taskNumber}PartialReason`).value.trim();
 
-    if (!taskTitle) return ""; // Skip empty tasks
+    if (!taskTitle) return "";
 
     let status = "";
     if (isCompleted) {
@@ -454,7 +454,7 @@ function generateSlackMarkdown() {
 
   const yesterdayReview = `*Yesterday's Top 3 Review:*\n${[1, 2, 3]
     .map(taskNumber => formatTaskReview(taskNumber))
-    .filter(Boolean) // Filter out empty results
+    .filter(Boolean)
     .join("\n")}`;
 
   const tomorrowTasks = `*Top 3 for Tomorrow:*\n${[1, 2, 3]
