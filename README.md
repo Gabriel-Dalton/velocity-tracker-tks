@@ -10,10 +10,10 @@ A comprehensive toolkit for tracking daily and weekly progress, built with HTML,
 - **Top 3 Task Reviews**: Track yesterday’s top 3 tasks with checkboxes for completion and notes on unfinished tasks.
 - **Top 3 for Tomorrow**: Plan the top 3 tasks for the next day with optional descriptions.
 - **Daily Reflections**: Add sections for Wins, Challenges, and Self-Reflections, with formatting options for bulleted or numbered lists.
-- **Habit Tracker**: Check off daily habits like meditation, workouts, and hydration.
+- **Habit Tracker**: Check off daily habits like meditation, workouts, Duolingo, and hydration.
 - **Podcast Notes**: Log podcast titles and learnings if you listened to one.
 - **Day Rating**: A slider to rate the day on a scale of 1 to 10.
-- **Gratitude Section**: Note things you’re grateful for each day.
+- **Gratitude Section**: Note things or people you’re grateful for each day.
 - **Markdown Generation**: Automatically generate a Markdown summary for easy journaling and copy it to your clipboard.
 
 ### 📅 Weekly Tracker
@@ -21,7 +21,7 @@ A comprehensive toolkit for tracking daily and weekly progress, built with HTML,
 - **Challenges and Learnings**: Reflect on obstacles faced and lessons learned.
 - **Top Priorities for Next Week**: Plan and outline key tasks for the coming week.
 - **Progress Tracker**: Track progress across larger goals or recurring tasks.
-- **Markdown Export**: Generate a clean Markdown summary of your weekly review and plans.
+- **Markdown Export**: Generate a clean Markdown summary of your weekly review and plans. (Backup to a Slack.com canvas or upload to Dropbox.paper!)
 
 ---
 
